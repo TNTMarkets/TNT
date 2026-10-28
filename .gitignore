@@ -1,0 +1,35 @@
+# Node and build output
+node_modules/
+dist/
+storybook-static/
+coverage/
+*.log
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Test reports
+playwright-report/
+test-results/
+
+# Generated certificates
+certs/
+
+# OS and IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Personal agent files
+.claude/settings.local.json
+CLAUDE.local.md
+.claude/plans/
+.claude/worktrees/
+AGENTS.local.md
+.cursor/
+.gemini/*
+!.gemini/settings.json
