@@ -1,0 +1,14 @@
+pre-commit:
+  piped: true
+  jobs:
+    - name: branch name
+      run: sh scripts/check-branch.sh
+
+    - name: lint
+      glob: "*.{ts,tsx}"
+      run: pnpm exec eslint --fix --no-warn-ignored {staged_files}
+      stage_fixed: true
+
+    - name: format
+      run: pnpm exec prettier --write --ignore-unknown {staged_files}
+      stage_fixed: true
