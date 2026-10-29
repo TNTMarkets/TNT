@@ -1,0 +1,5 @@
+{
+  "name": "@tnt/api",
+  "private": true,
+  "type": "module"
+}
