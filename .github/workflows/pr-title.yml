@@ -1,0 +1,21 @@
+name: PR title
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+permissions: {}
+
+jobs:
+  pr-title:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: 'Title is "TNT-<n>: <what changed>"'
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if ! printf '%s' "$TITLE" | grep -Eq '^TNT-[1-9][0-9]*: [^ ]'; then
+            echo '::error::PR title must be "TNT-<n>: <what changed>", e.g. "TNT-7: CI and PR rules"'
+            exit 1
+          fi
