@@ -14,8 +14,8 @@ only if asked again.
 
 ## Tasks, branches, PRs
 
-- Work starts from a Linear issue `TNT-<n>`: ask for it, or create it via the Linear MCP.
-  Never invent a number.
+- Code changes start from a Linear issue `TNT-<n>`: ask for it, or propose one and create it via
+  the Linear MCP after the user agrees. Never invent a number.
 - Branch `<nick>.TNT-<n>.<kebab-description>`; nick from `git config tnt.nick` (if empty, ask and set it).
 - Squash merge: the PR title `TNT-<n>: <what changed>` becomes the commit on `main`.
 - Before a PR, a fresh-context reviewer checks the diff against this file and reports merge
@@ -25,8 +25,9 @@ only if asked again.
 
 - Tests first: agree on behavior, write failing tests, then code. Never bend a test to fit
   the code; if a test is wrong, say so first.
-- Dependencies are passed in and built only in the composition root: no singletons,
-  no config read in place.
+- DI by hand, no container, no singletons: build services and read env only in `apps/api/src/main.ts`
+  and `apps/web/src/main.tsx`, then pass them down as arguments or props.
+- React Compiler is on in web: no manual `useMemo` or `useCallback`.
 - Comments only for what code can't say: a product decision or a deliberate workaround, with the reason.
 
 ## Commands
@@ -35,8 +36,8 @@ Repo root, pnpm only: never `npm` or `npx` (use `pnpm dlx`).
 
 - Check your work: `pnpm typecheck`, `pnpm lint`, `pnpm format:check` (`pnpm format` fixes).
 - Run: `pnpm --filter @tnt/api dev` (:3000), `pnpm --filter @tnt/web dev` (:5173).
-- Add a dependency: `pnpm add <pkg> --filter @tnt/<package>`; its version goes to the `catalog`
-  in `pnpm-workspace.yaml`.
+- Add a dependency (after the user agrees): `pnpm add <pkg> --filter @tnt/<package>`, or `-D -w`
+  for a root tool; `pnpm add` writes its version to the `catalog` in `pnpm-workspace.yaml`.
 
 ## Where things live
 
@@ -44,3 +45,4 @@ Repo root, pnpm only: never `npm` or `npx` (use `pnpm dlx`).
 - `apps/api`: Express; Node runs the `.ts` files as they are, there is no compile step to JS.
 - `packages/api-schemas`: zod schemas shared by web and api.
 - One eslint, prettier and base tsconfig at the root; packages only extend them.
+- Planned, not installed yet: Socket.io, PostgreSQL + Drizzle, Docker.

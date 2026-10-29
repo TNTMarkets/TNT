@@ -26,7 +26,7 @@ if [ "$(node -p 'process.versions.node.split(".")[0]' 2>/dev/null || true)" != "
   # nvm.sh fails under `set -eu`, so it runs with them off.
   set +eu
   . "$NVM_DIR/nvm.sh"
-  nvm install
+  nvm install || fail "nvm couldn't install Node $node_major."
   set -eu
 fi
 echo "node $(node -v)"
@@ -69,4 +69,4 @@ git config push.autoSetupRemote true
 step "dependencies and git hooks"
 pnpm install
 
-printf '\nDone. Open a new terminal so nvm and pnpm are on PATH, then run: pnpm --filter @tnt/api dev\n'
+printf '\nDone. Open a new terminal, run `nvm use` in the repo, then: pnpm --filter @tnt/api dev\n'
