@@ -25,5 +25,17 @@ services:
       timeout: 3s
       retries: 30
 
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - "${HTTPS_PORT:-8443}:443"
+    volumes:
+      - certs:/etc/nginx/certs
+    depends_on:
+      - api
+
 volumes:
+  certs:
   db-data:
