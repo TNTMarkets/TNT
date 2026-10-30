@@ -3,7 +3,7 @@ import { healthResponseSchema } from "@tnt/api-schemas";
 
 const app = express();
 
-app.get("/health", (_req, res) => {
+app.get("/api/health", (_req, res) => {
   res.json(healthResponseSchema.parse({ status: "ok" }));
 });
 
