@@ -1,0 +1,24 @@
+# Shared code, configs and CI: one change here affects every area.
+# Two owners so either can approve the other's PR; GitHub blocks approving your own.
+
+/apps/api/src/platform/   @Udobnaja @LavrAnastasia
+/apps/*/src/shared/       @Udobnaja @LavrAnastasia
+/packages/api-schemas/    @Udobnaja @LavrAnastasia
+
+/.github/                 @Udobnaja @LavrAnastasia
+/scripts/                 @Udobnaja @LavrAnastasia
+/package.json             @Udobnaja @LavrAnastasia
+/pnpm-workspace.yaml      @Udobnaja @LavrAnastasia
+/tsconfig.base.json       @Udobnaja @LavrAnastasia
+/eslint.config.js         @Udobnaja @LavrAnastasia
+/prettier.config.js       @Udobnaja @LavrAnastasia
+/lefthook.yml             @Udobnaja @LavrAnastasia
+/.nvmrc                   @Udobnaja @LavrAnastasia
+/.editorconfig            @Udobnaja @LavrAnastasia
+/.gitattributes           @Udobnaja @LavrAnastasia
+/.gitignore               @Udobnaja @LavrAnastasia
+/.prettierignore          @Udobnaja @LavrAnastasia
+/apps/*/tsconfig.json     @Udobnaja @LavrAnastasia
+/packages/*/tsconfig.json @Udobnaja @LavrAnastasia
+/apps/web/vite.config.ts  @Udobnaja @LavrAnastasia
+/AGENTS.md                @Udobnaja @LavrAnastasia
