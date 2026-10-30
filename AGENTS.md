@@ -32,7 +32,7 @@ only if asked again.
 
 ## Commands
 
-Repo root, pnpm only: never `npm` or `npx` (use `pnpm dlx`).
+Repo root, pnpm only: never `npm` or `npx` (use `pnpm dlx`); npm only installs pnpm itself.
 
 - Check your work: `pnpm typecheck`, `pnpm lint`, `pnpm format:check` (`pnpm format` fixes).
 - Run: `pnpm --filter @tnt/api dev` (:3000), `pnpm --filter @tnt/web dev` (:5173).
