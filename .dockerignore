@@ -1,0 +1,26 @@
+# Host-installed packages are built for macOS/Windows; the image installs its own.
+**/node_modules
+
+# Build output and reports
+**/dist
+coverage/
+storybook-static/
+playwright-report/
+test-results/
+*.log
+
+# Secrets and local certificates never go into an image.
+.env
+.env.*
+certs/
+
+# Not needed to build or run
+.git/
+.github/
+.claude/
+.agents/
+.gemini/
+.cursor/
+.idea/
+.vscode/
+.DS_Store
