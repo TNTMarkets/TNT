@@ -24,3 +24,5 @@ certs/
 .idea/
 .vscode/
 .DS_Store
+**/*.test.ts
+**/*.test.tsx
