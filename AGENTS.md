@@ -23,8 +23,8 @@ only if asked again.
 
 ## Code
 
-- Tests first: agree on behavior, write failing tests, then code. Never bend a test to fit
-  the code; if a test is wrong, say so first.
+- Tests first: agree on behavior, write tests that fail on their assertion (not on an import),
+  then code. Never bend a test to fit the code; if a test is wrong, say so first.
 - DI by hand, no container, no singletons: build services and read env only in `apps/api/src/main.ts`
   and `apps/web/src/main.tsx`, then pass them down as arguments or props.
 - React Compiler is on in web: no manual `useMemo` or `useCallback`.

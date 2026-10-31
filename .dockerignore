@@ -25,4 +25,3 @@ certs/
 .vscode/
 .DS_Store
 **/*.test.ts
-**/*.test.tsx
