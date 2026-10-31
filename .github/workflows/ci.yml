@@ -38,6 +38,8 @@ jobs:
         run: pnpm typecheck
       - name: Test
         run: pnpm test
+      - name: Integration tests
+        run: pnpm test:integration
       - name: Build
         run: pnpm build
 

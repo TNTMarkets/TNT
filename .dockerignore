@@ -25,3 +25,5 @@ certs/
 .vscode/
 .DS_Store
 **/*.test.ts
+**/vitest.config.ts
+**/test/
