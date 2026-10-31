@@ -66,6 +66,14 @@ git config pull.rebase true
 git config rebase.autoStash true
 git config push.autoSetupRemote true
 
+step ".env"
+if [ -e .env ]; then
+  echo ".env exists, left as is"
+else
+  cp .env.example .env
+  echo "Created .env from .env.example"
+fi
+
 step "dependencies and git hooks"
 pnpm install
 
