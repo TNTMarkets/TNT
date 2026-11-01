@@ -11,7 +11,7 @@ say why and propose changing the rule.
 - Decisions the user owns (product behavior, data shape, dependencies): up to 3 options in plain
   words with their later cost, plus one recommendation. Code details are yours.
 - New rules go here, never in `CLAUDE.md`.
-- Link docs in `docs/` from here with when to read each; never `@`-import them.
+- Link here only the `docs/` files an agent needs, each with when to read it; never `@`-import them.
 
 ## Tasks, branches, PRs
 
@@ -31,6 +31,21 @@ say why and propose changing the rule.
 - React Compiler is on in web: no manual `useMemo` or `useCallback`.
 - Comments only for what code can't say: a product decision or a deliberate workaround, with the reason.
 
+## Tests
+
+- `pnpm test:integration` with Docker stopped prints "No test files found" (vitest#11682), not a
+  Docker error: start Docker, don't debug the globs.
+- Web has no unit-test project yet: add one to `apps/web/vitest.config.ts` before writing
+  `*.test.ts` there.
+- e2e specs import `test` and `expect` from `apps/web/e2e/test.ts`, never `@playwright/test`,
+  which skips our console check.
+- Until TNT-22 fixes the e2e locale, don't match on UI text (`getByText`, or `getByRole` with
+  `name`).
+- Every UI component gets a story. `tags: ["skip-screenshot"]` only for output you can't make
+  stable (fixed dates, seeds).
+- New story: write it, then check the new baseline. Update baselines only for a visual change you
+  meant to make, and say so in the PR.
+
 ## Commands
 
 Repo root, pnpm only in this workspace: never `npm` or `npx` (use `pnpm dlx`); npm only installs pnpm itself.
@@ -46,4 +61,4 @@ Repo root, pnpm only in this workspace: never `npm` or `npx` (use `pnpm dlx`); n
 - `apps/api`: Express; Node runs the `.ts` files as they are, there is no compile step to JS.
 - `packages/api-schemas`: zod schemas shared by web and api.
 - One eslint, prettier and base tsconfig at the root; packages only extend them.
-- Planned, not installed yet: Socket.io, PostgreSQL + Drizzle, Docker.
+- Planned, not installed yet: Socket.io, Drizzle.
