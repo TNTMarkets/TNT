@@ -7,7 +7,12 @@ export default defineConfig({
   testDir: ".",
   forbidOnly: ci,
   retries: ci ? 2 : 0,
-  reporter: ci ? [["github"], ["html", { open: "never" }]] : "list",
+  reporter: ci
+    ? [
+        ["github"],
+        ["html", { open: "never", outputFolder: "playwright-report" }],
+      ]
+    : "list",
   use: {
     baseURL: baseURL ?? "http://localhost:5173",
     ignoreHTTPSErrors: true,
