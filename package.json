@@ -12,6 +12,8 @@
     "test": "pnpm -r test",
     "test:integration": "pnpm -r test:integration",
     "test:e2e": "pnpm -r test:e2e",
+    "test:screenshots": "docker compose --profile screenshots up -d --wait screenshots && pnpm -r test:screenshots",
+    "test:screenshots:update": "docker compose --profile screenshots up -d --wait screenshots && pnpm -r test:screenshots:update",
     "build": "pnpm -r build",
     "lint": "eslint .",
     "format": "prettier --write .",

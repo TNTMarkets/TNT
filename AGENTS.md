@@ -1,7 +1,8 @@
 # TNT — rules for agents
 
 On conflict with a rule here: name the rule, propose a compliant version; write the violating one
-only if asked again.
+only if asked again. If a rule's purpose doesn't apply, don't build a workaround to satisfy it:
+say why and propose changing the rule.
 
 ## Working
 
@@ -32,7 +33,7 @@ only if asked again.
 
 ## Commands
 
-Repo root, pnpm only: never `npm` or `npx` (use `pnpm dlx`); npm only installs pnpm itself.
+Repo root, pnpm only in this workspace: never `npm` or `npx` (use `pnpm dlx`); npm only installs pnpm itself.
 
 - Check your work: `pnpm typecheck`, `pnpm lint`, `pnpm format:check` (`pnpm format` fixes).
 - Run: `pnpm --filter @tnt/api dev` (:3000), `pnpm --filter @tnt/web dev` (:5173).
