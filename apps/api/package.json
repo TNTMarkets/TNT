@@ -5,6 +5,7 @@
   "scripts": {
     "db:up": "docker compose up --detach --wait db",
     "db:migrate": "node --env-file-if-exists=../../.env src/migrate.ts",
+    "check:migration-order": "node scripts/check-migration-order.ts",
     "dev": "pnpm db:up && pnpm db:migrate && node --env-file-if-exists=../../.env --watch src/main.ts",
     "start": "node src/main.ts",
     "test": "vitest run --project unit",

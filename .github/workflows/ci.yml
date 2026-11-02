@@ -40,6 +40,17 @@ jobs:
         run: pnpm test
       - name: Integration tests
         run: pnpm test:integration
+      - name: Checkout main's migrations
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.base_ref }}
+          path: base
+          sparse-checkout: apps/api/drizzle/meta
+          persist-credentials: false
+      - name: Migration order
+        if: github.event_name == 'pull_request'
+        run: pnpm --filter @tnt/api check:migration-order ../../base/apps/api/drizzle/meta/_journal.json drizzle/meta/_journal.json
       - name: Screenshot tests
         run: pnpm test:screenshots
       - name: Screenshot diffs
