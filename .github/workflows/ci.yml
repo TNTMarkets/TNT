@@ -40,7 +40,9 @@ jobs:
           persist-credentials: false
       - name: Migrations vs main
         if: github.event_name == 'pull_request'
-        run: pnpm --filter @tnt/api check:migrations ../../base/apps/api/drizzle drizzle
+        run: |
+          mv base "$RUNNER_TEMP/base"
+          pnpm --filter @tnt/api check:migrations "$RUNNER_TEMP/base/apps/api/drizzle" drizzle
       - name: Migrations match the schema
         run: |
           pnpm --filter @tnt/api db:generate
