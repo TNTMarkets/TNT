@@ -36,6 +36,19 @@ services:
     depends_on:
       - api
 
+  screenshots:
+    build: apps/web/test/screenshot-server
+    platform: linux/amd64
+    profiles: [screenshots]
+    init: true
+    ports:
+      - "127.0.0.1:3001:3001"
+    healthcheck:
+      test: node -e "require('net').connect(3001).on('connect', () => process.exit(0)).on('error', () => process.exit(1))"
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
 volumes:
   certs:
   db-data:

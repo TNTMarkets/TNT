@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "node --watch src/main.ts",
     "start": "node src/main.ts",
+    "test": "vitest run --project unit",
+    "test:integration": "vitest run --project integration",
     "typecheck": "tsc"
   },
   "dependencies": {
@@ -12,7 +14,10 @@
     "express": "catalog:"
   },
   "devDependencies": {
+    "@testcontainers/postgresql": "catalog:",
     "@types/express": "catalog:",
-    "@types/node": "catalog:"
+    "@types/node": "catalog:",
+    "postgres": "catalog:",
+    "vitest": "catalog:"
   }
 }
