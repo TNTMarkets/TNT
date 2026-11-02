@@ -11,13 +11,15 @@
   },
   "dependencies": {
     "@tnt/api-schemas": "workspace:*",
-    "express": "catalog:"
+    "drizzle-orm": "catalog:",
+    "express": "catalog:",
+    "postgres": "catalog:"
   },
   "devDependencies": {
     "@testcontainers/postgresql": "catalog:",
     "@types/express": "catalog:",
     "@types/node": "catalog:",
-    "postgres": "catalog:",
+    "drizzle-kit": "catalog:",
     "vitest": "catalog:"
   }
 }
