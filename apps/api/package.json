@@ -3,9 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "db:up": "docker compose up --detach --wait db",
+    "compose:dev": "pnpm -w exec docker compose -f compose.yaml -f compose.dev.yaml",
+    "db:up": "pnpm compose:dev up --detach --wait db",
     "db:migrate": "node --env-file-if-exists=../../.env src/migrate.ts",
-    "check:migration-order": "node scripts/check-migration-order.ts",
+    "check:migrations": "node scripts/check-migrations.ts",
     "dev": "pnpm db:up && pnpm db:migrate && node --env-file-if-exists=../../.env --watch src/main.ts",
     "start": "node src/main.ts",
     "test": "vitest run --project unit",

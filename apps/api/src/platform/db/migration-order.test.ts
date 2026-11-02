@@ -1,5 +1,8 @@
 import { expect, test } from "vitest";
-import { migrationsOlderThanMain } from "./migration-order.ts";
+import {
+  editedMigrations,
+  migrationsOlderThanMain,
+} from "./migration-order.ts";
 
 const categories = { tag: "0000_create_categories", when: 100 };
 const users = { tag: "0001_create_users", when: 200 };
@@ -34,5 +37,40 @@ test("migrations already on main are never flagged", () => {
       [categories, mergedOutOfOrder],
       [categories, mergedOutOfOrder],
     ),
+  ).toEqual([]);
+});
+
+const mainSql = {
+  "0000_create_categories": "CREATE TABLE categories ...;",
+  "0001_create_users": "CREATE TABLE users ...;",
+};
+
+test("migrations from main left as they are pass", () => {
+  expect(editedMigrations(mainSql, { ...mainSql })).toEqual([]);
+});
+
+test("a migration from main changed in the branch is flagged", () => {
+  expect(
+    editedMigrations(mainSql, {
+      ...mainSql,
+      "0001_create_users": "CREATE TABLE users ... changed;",
+    }),
+  ).toEqual(["0001_create_users"]);
+});
+
+test("a migration from main deleted in the branch is flagged", () => {
+  expect(
+    editedMigrations(mainSql, {
+      "0000_create_categories": mainSql["0000_create_categories"],
+    }),
+  ).toEqual(["0001_create_users"]);
+});
+
+test("a new migration only in the branch is not flagged", () => {
+  expect(
+    editedMigrations(mainSql, {
+      ...mainSql,
+      "0002_create_listings": "CREATE TABLE listings ...;",
+    }),
   ).toEqual([]);
 });

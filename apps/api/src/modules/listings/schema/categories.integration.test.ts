@@ -17,12 +17,12 @@ test("a saved category reads back with an id from the database", async () => {
     .insert(categories)
     .values({ slug: "bikes" })
     .returning();
-  const [read] = await db
+  const read = await db
     .select()
     .from(categories)
-    .where(eq(categories.id, saved?.id ?? ""));
+    .where(eq(categories.slug, "bikes"));
 
-  expect(read).toEqual({ id: saved?.id, slug: "bikes" });
+  expect(read).toEqual([saved]);
 });
 
 test("two categories can't share a slug", async () => {
@@ -33,7 +33,7 @@ test("two categories can't share a slug", async () => {
   ).rejects.toMatchObject({ cause: { code: UNIQUE_VIOLATION } });
 });
 
-test.each(["Books", "home garden", "-books", "книги"])(
+test.each(["Books", "home garden", "-books", "books-", "a--b", "книги"])(
   "slug %j is rejected: only a-z, digits and single dashes",
   async (slug) => {
     await expect(db.insert(categories).values({ slug })).rejects.toMatchObject({

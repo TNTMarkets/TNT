@@ -20,17 +20,19 @@ export function dbConfigFromEnv(
     })
       .filter(([, value]) => !value)
       .map(([name]) => name);
-    throw new Error(`Not set: ${missing.join(", ")}`);
+    throw new Error(
+      `Not set: ${missing.join(", ")}. Locally: copy .env.example to .env (scripts/setup.sh does it).`,
+    );
   }
 
-  const rawPort = env["POSTGRES_PORT"] ?? "5432";
+  const rawPort = env["POSTGRES_PORT"] || "5432";
   const port = Number(rawPort);
-  if (!Number.isInteger(port)) {
-    throw new Error(`POSTGRES_PORT is not a number: ${rawPort}`);
+  if (!Number.isInteger(port) || port < 1 || port > 65535) {
+    throw new Error(`POSTGRES_PORT is not a port (1-65535): ${rawPort}`);
   }
 
   return {
-    host: env["POSTGRES_HOST"] ?? "localhost",
+    host: env["POSTGRES_HOST"] || "localhost",
     port,
     user,
     password,

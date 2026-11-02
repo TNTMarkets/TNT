@@ -14,3 +14,10 @@ export function migrationsOlderThanMain(
     (entry) => !onMain.has(entry.tag) && entry.when <= newestOnMain,
   );
 }
+
+export function editedMigrations(
+  main: Record<string, string>,
+  branch: Record<string, string>,
+): string[] {
+  return Object.keys(main).filter((tag) => branch[tag] !== main[tag]);
+}
