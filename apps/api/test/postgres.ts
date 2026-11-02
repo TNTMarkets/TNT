@@ -1,6 +1,8 @@
 import { execFileSync } from "node:child_process";
 import { PostgreSqlContainer } from "@testcontainers/postgresql";
 import type { TestProject } from "vitest/node";
+import { createDb } from "../src/platform/db/db.ts";
+import { runMigrations } from "../src/platform/db/migrate.ts";
 
 declare module "vitest" {
   export interface ProvidedContext {
@@ -19,7 +21,13 @@ export default async function setup(project: TestProject) {
   ).trim();
 
   const container = await new PostgreSqlContainer(image).start();
-  project.provide("databaseUrl", container.getConnectionUri());
+  const databaseUrl = container.getConnectionUri();
+
+  const db = createDb(databaseUrl);
+  await runMigrations(db);
+  await db.$client.end();
+
+  project.provide("databaseUrl", databaseUrl);
 
   return async () => {
     await container.stop();
