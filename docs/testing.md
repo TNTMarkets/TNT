@@ -1,11 +1,11 @@
 # Testing
 
-| Kind        | Where                                      | Run                     | Needs                                                            |
-| ----------- | ------------------------------------------ | ----------------------- | ---------------------------------------------------------------- |
-| Unit        | `*.test.ts` next to the code               | `pnpm test`             | —                                                                |
-| Integration | `*.integration.test.ts` next to the code   | `pnpm test:integration` | Docker running                                                   |
-| e2e         | `apps/web/e2e/*.spec.ts`                   | `pnpm test:e2e`         | browsers, once: `pnpm --filter @tnt/web exec playwright install` |
-| Screenshots | stories `*.stories.tsx` next to components | `pnpm test:screenshots` | Docker running                                                   |
+| Kind        | Where                                      | Run                     | Needs                                                                            |
+| ----------- | ------------------------------------------ | ----------------------- | -------------------------------------------------------------------------------- |
+| Unit        | `*.test.ts` next to the code               | `pnpm test`             | —                                                                                |
+| Integration | `*.integration.test.ts` next to the code   | `pnpm test:integration` | Docker running                                                                   |
+| e2e         | `apps/web/e2e/*.spec.ts`                   | `pnpm test:e2e`         | Docker running; browsers, once: `pnpm --filter @tnt/web exec playwright install` |
+| Screenshots | stories `*.stories.tsx` next to components | `pnpm test:screenshots` | Docker running                                                                   |
 
 ## Unit and integration
 

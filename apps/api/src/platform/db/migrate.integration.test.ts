@@ -3,7 +3,7 @@ import { afterAll, expect, inject, test } from "vitest";
 import { createDb } from "./db.ts";
 import { runMigrations } from "./migrate.ts";
 
-const db = createDb(inject("databaseUrl"));
+const db = createDb(inject("dbConfig"));
 
 afterAll(async () => {
   await db.$client.end();

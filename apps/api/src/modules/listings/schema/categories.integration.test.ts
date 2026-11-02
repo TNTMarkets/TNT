@@ -6,7 +6,7 @@ import { categories } from "./categories.ts";
 const UNIQUE_VIOLATION = "23505";
 const CHECK_VIOLATION = "23514";
 
-const db = createDb(inject("databaseUrl"));
+const db = createDb(inject("dbConfig"));
 
 afterAll(async () => {
   await db.$client.end();
