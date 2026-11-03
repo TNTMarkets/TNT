@@ -2,6 +2,12 @@
   "name": "@tnt/web",
   "private": true,
   "type": "module",
+  "imports": {
+    "#app/*": "./src/app/*",
+    "#pages/*": "./src/pages/*",
+    "#modules/*": "./src/modules/*",
+    "#shared/*": "./src/shared/*"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",

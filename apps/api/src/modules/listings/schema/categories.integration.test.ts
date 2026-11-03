@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { afterAll, expect, inject, test } from "vitest";
-import { createDb } from "../../../platform/db/db.ts";
+import { createDb } from "#platform/db/db.ts";
 import { categories } from "./categories.ts";
 
 const UNIQUE_VIOLATION = "23505";

@@ -2,6 +2,12 @@
   "name": "@tnt/api",
   "private": true,
   "type": "module",
+  "imports": {
+    "#app/*": "./src/app/*",
+    "#platform/*": "./src/platform/*",
+    "#modules/*": "./src/modules/*",
+    "#shared/*": "./src/shared/*"
+  },
   "scripts": {
     "compose:dev": "pnpm -w exec docker compose -f compose.yaml -f compose.dev.yaml",
     "db:up": "pnpm compose:dev up --detach --wait db",

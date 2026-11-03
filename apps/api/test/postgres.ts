@@ -1,9 +1,9 @@
 import { execFileSync } from "node:child_process";
 import { PostgreSqlContainer } from "@testcontainers/postgresql";
 import type { TestProject } from "vitest/node";
-import type { DbConfig } from "../src/platform/db/config.ts";
-import { createDb } from "../src/platform/db/db.ts";
-import { runMigrations } from "../src/platform/db/migrate.ts";
+import type { DbConfig } from "#platform/db/config.ts";
+import { createDb } from "#platform/db/db.ts";
+import { runMigrations } from "#platform/db/migrate.ts";
 
 declare module "vitest" {
   export interface ProvidedContext {

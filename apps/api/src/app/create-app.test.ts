@@ -2,7 +2,7 @@ import { once } from "node:events";
 import type { Server } from "node:http";
 import type { AddressInfo } from "node:net";
 import { afterAll, beforeAll, expect, test } from "vitest";
-import { createApp } from "./app.ts";
+import { createApp } from "./create-app.ts";
 
 let server: Server;
 let baseUrl = "";
