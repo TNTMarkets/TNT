@@ -52,7 +52,6 @@ export function boundariesConfig(deps = moduleDeps) {
             noWarnOnMultipleProjects: true,
           },
         },
-        // Process starters: they wire everything, so they sit outside the layers.
         "boundaries/files": [
           {
             pattern: [

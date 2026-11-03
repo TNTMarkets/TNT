@@ -14,7 +14,7 @@ const PROJECT_RULES = new Set([
 function linter(moduleDeps) {
   return new ESLint({
     cwd: import.meta.dirname + "/..",
-    // Snippets aren't files on disk, so the type checker can't see them.
+    // Type-aware rules need a real file; these tests lint plain strings.
     overrideConfig: [
       tseslint.configs.disableTypeChecked,
       ...(moduleDeps ? boundariesConfig(moduleDeps) : []),
