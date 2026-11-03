@@ -2,7 +2,7 @@ name: tnt
 
 x-postgres-credentials: &postgres-credentials
   POSTGRES_USER: ${POSTGRES_USER:-tnt}
-  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-tnt}
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set it in .env (scripts/setup.sh creates one)}
   POSTGRES_DB: ${POSTGRES_DB:-tnt}
 
 services:
@@ -24,6 +24,9 @@ services:
       dockerfile: apps/api/Dockerfile
     init: true
     restart: unless-stopped
+    environment:
+      <<: *postgres-credentials
+      POSTGRES_HOST: db
     depends_on:
       migrate:
         condition: service_completed_successfully

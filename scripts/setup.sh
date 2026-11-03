@@ -70,8 +70,8 @@ step ".env"
 if [ -e .env ]; then
   echo ".env exists, left as is"
 else
-  cp .env.example .env
-  echo "Created .env from .env.example"
+  sed "s/^POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=$(openssl rand -hex 16)/" .env.example >.env
+  echo "Created .env from .env.example with a random POSTGRES_PASSWORD"
 fi
 
 step "dependencies and git hooks"
