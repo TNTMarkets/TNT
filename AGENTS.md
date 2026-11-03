@@ -26,10 +26,16 @@ say why and propose changing the rule.
 
 - Tests first: agree on behavior, write tests that fail on their assertion (not on an import),
   then code. Never bend a test to fit the code; if a test is wrong, say so first.
-- DI by hand, no container, no singletons: build services and read env only in `apps/api/src/main.ts`
-  and `apps/web/src/main.tsx`, then pass them down as arguments or props.
+- DI by hand, no container: modules get their dependencies (db, clients, config) as arguments or
+  props; they never export a live instance or read env. Only the code that starts a process wires
+  them up.
 - React Compiler is on in web: no manual `useMemo` or `useCallback`.
 - Comments only for what code can't say: a product decision or a deliberate workaround, with the reason.
+
+## Secrets
+
+- Never print secret values (`.env`, keys, certs, tokens); look at names only.
+  `docker compose config` prints them too: use `--quiet` or `--no-interpolate`.
 
 ## Tests
 
@@ -55,6 +61,9 @@ Commands inside Docker images aren't in the workspace; this rule doesn't apply t
 - Run: `pnpm --filter @tnt/api dev` (:3000), `pnpm --filter @tnt/web dev` (:5173).
 - Add a dependency (after the user agrees): `pnpm add <pkg> --filter @tnt/<package>`, or `-D -w`
   for a root tool; `pnpm add` writes its version to the `catalog` in `pnpm-workspace.yaml`.
+- DB schema change (after the user agrees): edit or add
+  `apps/api/src/modules/<module>/schema/<table>.ts`, export it from that module's `schema.ts`, then
+  `pnpm --filter @tnt/api db:generate --name=<what_changed>`. Never edit a migration already on `main`.
 
 ## Where things live
 
@@ -62,4 +71,4 @@ Commands inside Docker images aren't in the workspace; this rule doesn't apply t
 - `apps/api`: Express; Node runs the `.ts` files as they are, there is no compile step to JS.
 - `packages/api-schemas`: zod schemas shared by web and api.
 - One eslint, prettier and base tsconfig at the root; packages only extend them.
-- Planned, not installed yet: Socket.io, Drizzle.
+- Planned, not installed yet: Socket.io.

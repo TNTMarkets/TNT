@@ -30,6 +30,26 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Checkout main's migrations
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.base_ref }}
+          path: base
+          sparse-checkout: apps/api/drizzle
+          persist-credentials: false
+      - name: Migrations vs main
+        if: github.event_name == 'pull_request'
+        run: |
+          mv base "$RUNNER_TEMP/base"
+          pnpm --filter @tnt/api check:migrations "$RUNNER_TEMP/base/apps/api/drizzle" drizzle
+      - name: Migrations match the schema
+        run: |
+          pnpm --filter @tnt/api db:generate
+          if [ -n "$(git status --porcelain apps/api/drizzle)" ]; then
+            echo "The schema changed without a migration: run pnpm --filter @tnt/api db:generate --name=<what_changed> and commit it."
+            exit 1
+          fi
       - name: Format
         run: pnpm format:check
       - name: Lint
