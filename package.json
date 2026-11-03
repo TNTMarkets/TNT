@@ -9,7 +9,7 @@
   "scripts": {
     "prepare": "lefthook install",
     "typecheck": "pnpm -r typecheck",
-    "test": "pnpm -r test",
+    "test": "vitest run && pnpm -r test",
     "test:integration": "pnpm -r test:integration",
     "test:e2e": "pnpm -r test:e2e",
     "test:screenshots": "docker compose --profile screenshots up -d --wait screenshots && pnpm -r test:screenshots",
@@ -23,6 +23,8 @@
     "@eslint/js": "catalog:",
     "eslint": "catalog:",
     "eslint-config-prettier": "catalog:",
+    "eslint-import-resolver-typescript": "catalog:",
+    "eslint-plugin-boundaries": "catalog:",
     "eslint-plugin-jsx-a11y": "catalog:",
     "eslint-plugin-react-hooks": "catalog:",
     "eslint-plugin-react-refresh": "catalog:",
@@ -30,6 +32,7 @@
     "prettier": "catalog:",
     "prettier-plugin-tailwindcss": "catalog:",
     "typescript": "catalog:",
-    "typescript-eslint": "catalog:"
+    "typescript-eslint": "catalog:",
+    "vitest": "catalog:"
   }
 }
