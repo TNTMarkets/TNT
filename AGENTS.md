@@ -33,6 +33,13 @@ say why and propose changing the rule.
   props; they never export a live instance or read env. Only the code that starts a process wires
   them up.
 - React Compiler is on in web: no manual `useMemo` or `useCallback`.
+- api route handler: `parseRequest(schema, req.body | req.params | req.query)`, call one module
+  function with `{ db }`, answer through the response schema from `@tnt/api-schemas`; fail with
+  `HttpError(status, code)`. Logic and transactions live in that function, not in the handler.
+  Query params arrive as strings: `z.coerce.number()`, `z.stringbool()`.
+- Web routes are code in `apps/web/src/app/router.tsx`, not file-based.
+- UI text is plain English until TNT-22; mark each component that has it with
+  `// TODO(TNT-22): move this UI text to translation keys`.
 - Comments only for what code can't say: a product decision or a deliberate workaround, with the
   reason. Short, no trailing period.
 
@@ -43,10 +50,9 @@ say why and propose changing the rule.
 
 ## Tests
 
+- Read `docs/testing.md` before writing integration, e2e or screenshot tests.
 - `pnpm test:integration` with Docker stopped prints "No test files found" (vitest#11682), not a
   Docker error: start Docker, don't debug the globs.
-- Web has no unit-test project yet: add one to `apps/web/vitest.config.ts` before writing
-  `*.test.ts` there.
 - e2e specs import `test` and `expect` from `apps/web/e2e/test.ts`, never `@playwright/test`,
   which skips our console check.
 - Until TNT-22 fixes the e2e locale, don't match on UI text (`getByText`, or `getByRole` with
@@ -61,13 +67,12 @@ say why and propose changing the rule.
 Repo root, pnpm only: never `npm` or `npx` (use `pnpm dlx`); npm only installs pnpm itself.
 Commands inside Docker images aren't in the workspace; this rule doesn't apply there.
 
-- Check your work: `pnpm typecheck`, `pnpm lint`, `pnpm format:check` (`pnpm format` fixes).
+- Check your work: `pnpm typecheck`, `pnpm lint`, `pnpm format:check` (`pnpm format` fixes),
+  `pnpm test`.
 - Run: `pnpm --filter @tnt/api dev` (:3000), `pnpm --filter @tnt/web dev` (:5173).
 - Add a dependency (after the user agrees): `pnpm add <pkg> --filter @tnt/<package>`, or `-D -w`
   for a root tool; `pnpm add` writes its version to the `catalog` in `pnpm-workspace.yaml`.
-- DB schema change (after the user agrees): edit or add
-  `apps/api/src/modules/<module>/schema/<table>.ts`, export it from that module's `schema.ts`, then
-  `pnpm --filter @tnt/api db:generate --name=<what_changed>`. Never edit a migration already on `main`.
+- DB schema change (after the user agrees): follow `docs/database.md`.
 
 ## Where things live
 
@@ -75,4 +80,8 @@ Commands inside Docker images aren't in the workspace; this rule doesn't apply t
 - `apps/api`: Express; Node runs the `.ts` files as they are, there is no compile step to JS.
 - `packages/api-schemas`: zod schemas shared by web and api.
 - One eslint, prettier and base tsconfig at the root; packages only extend them.
-- Planned, not installed yet: Socket.io.
+- New module or feature: follow the reference `listings/categories` in api and web.
+- For module A to import module B, add B to A's list in `moduleDeps` (`eslint/boundaries.js`),
+  e.g. `chat: ["listings"]` lets chat import listings. Ask the user first.
+- Realtime (Socket.io, not installed yet) goes in `apps/api/src/platform/realtime`, not in a
+  module: chat and notifications send events through it, so they don't import each other.
