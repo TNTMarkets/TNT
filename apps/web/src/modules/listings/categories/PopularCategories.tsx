@@ -4,7 +4,7 @@ import type { Category } from "@tnt/api-schemas/listings";
 export function PopularCategories({ categories }: { categories: Category[] }) {
   const titleId = useId();
 
-  // TODO(TNT-22): move this UI text to translation keys
+  // TODO: TNT-22 — move this UI text to translation keys
   return (
     <section
       aria-labelledby={titleId}

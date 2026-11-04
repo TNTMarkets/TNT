@@ -5,7 +5,7 @@ import { categoriesQuery } from "./queries.ts";
 export function PopularCategoriesSection() {
   const { data, isError } = useQuery(categoriesQuery);
 
-  // TODO(TNT-22): move this UI text to translation keys
+  // TODO: TNT-22 — move this UI text to translation keys
   if (isError) {
     return (
       <p role="alert" data-testid="popular-categories-error">
