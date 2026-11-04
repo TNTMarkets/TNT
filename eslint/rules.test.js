@@ -72,6 +72,15 @@ describe("layers", () => {
     ).toEqual([]);
   });
 
+  test("a test file can build the app the way production does", async () => {
+    expect(
+      await violations(
+        "apps/api/src/modules/listings/x.integration.test.ts",
+        'export * from "#app/create-app.ts";',
+      ),
+    ).toEqual([]);
+  });
+
   test("production code can't import test helpers", async () => {
     expect(
       await violations(

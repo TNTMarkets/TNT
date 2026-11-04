@@ -90,7 +90,7 @@ export function boundariesConfig(deps = moduleDeps) {
             policies: [
               {
                 from: { file: { categories: "test" } },
-                allow: [layer("test-support")],
+                allow: [layer("test-support"), layer("app")],
               },
               {
                 from: { file: { categories: "entry" } },

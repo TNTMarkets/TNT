@@ -25,7 +25,8 @@
     "@tnt/api-schemas": "workspace:*",
     "drizzle-orm": "catalog:",
     "express": "catalog:",
-    "postgres": "catalog:"
+    "postgres": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@testcontainers/postgresql": "catalog:",

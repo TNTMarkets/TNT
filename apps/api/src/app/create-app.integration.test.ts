@@ -4,7 +4,7 @@ import type { AddressInfo } from "node:net";
 import { afterAll, expect, inject, test } from "vitest";
 import { createDb } from "#platform/db/db.ts";
 import type { Db } from "#platform/db/db.ts";
-import { serve } from "#platform/http/serve.ts";
+import { request } from "#test/http.ts";
 import { createApp } from "./create-app.ts";
 
 const db = createDb(inject("dbConfig"));
@@ -13,20 +13,10 @@ afterAll(async () => {
   await db.$client.end();
 });
 
-async function health(appDb: Db) {
-  const { port, shutdown } = await serve(
-    createApp({ db: appDb, modules: [] }),
-    {
-      port: 0,
-      onClose: () => {},
-    },
-  );
-  try {
-    const res = await fetch(`http://localhost:${String(port)}/api/health`);
-    return { status: res.status, body: (await res.json()) as unknown };
-  } finally {
-    await shutdown();
-  }
+function health(appDb: Db) {
+  return request(createApp({ db: appDb, modules: [] }), {
+    path: "/api/health",
+  });
 }
 
 async function freePort() {

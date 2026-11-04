@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { expect } from "vitest";
 import { dbTest } from "#test/db.ts";
-import { categories } from "./categories.ts";
+import { categories } from "./schema.ts";
 
 const UNIQUE_VIOLATION = "23505";
 const CHECK_VIOLATION = "23514";

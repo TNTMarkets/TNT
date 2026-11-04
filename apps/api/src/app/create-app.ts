@@ -1,16 +1,23 @@
 import { sql } from "drizzle-orm";
-import express, { type Express, type Router } from "express";
-import { healthResponseSchema } from "@tnt/api-schemas";
+import express, { type Express } from "express";
+import { healthResponseSchema } from "@tnt/api-schemas/health";
 import type { Db } from "#platform/db/db.ts";
+import { errorHandler, notFound } from "#platform/http/errors.ts";
+import type { AppModule } from "#platform/http/module.ts";
+import { assertNoRouteConflicts } from "#platform/http/module.ts";
 
 export function createApp({
   db,
   modules,
+  logError = console.error,
 }: {
   db: Db;
-  modules: Router[];
+  modules: AppModule[];
+  logError?: (error: unknown) => void;
 }): Express {
+  assertNoRouteConflicts(modules);
   const app = express();
+  app.use(express.json({ limit: "100kb" }));
 
   app.get("/api/health", async (_req, res) => {
     try {
@@ -23,7 +30,10 @@ export function createApp({
     }
   });
 
-  for (const router of modules) app.use("/api", router);
+  for (const module of modules) app.use("/api", module.router);
+
+  app.use("/api", notFound);
+  app.use(errorHandler(logError));
 
   return app;
 }
