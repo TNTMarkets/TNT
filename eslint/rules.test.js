@@ -14,7 +14,7 @@ const PROJECT_RULES = new Set([
 function linter(moduleDeps) {
   return new ESLint({
     cwd: import.meta.dirname + "/..",
-    // Type-aware rules need a real file; these tests lint plain strings.
+    // Type-aware rules need a real file; these tests lint plain strings
     overrideConfig: [
       tseslint.configs.disableTypeChecked,
       ...(moduleDeps ? boundariesConfig(moduleDeps) : []),

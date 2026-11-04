@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# One-time setup for a fresh clone; safe to re-run. Installs nothing system-wide (no sudo).
+# One-time setup for a fresh clone; safe to re-run. Installs nothing system-wide (no sudo)
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -23,7 +23,7 @@ if [ "$(node -p 'process.versions.node.split(".")[0]' 2>/dev/null || true)" != "
     echo "Installing nvm $NVM_VERSION into $NVM_DIR (it adds itself to your shell profile)"
     curl -fsSL "https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh" | bash
   fi
-  # nvm.sh fails under `set -eu`, so it runs with them off.
+  # nvm.sh fails under `set -eu`, so it runs with them off
   set +eu
   . "$NVM_DIR/nvm.sh"
   nvm install || fail "nvm couldn't install Node $node_major."

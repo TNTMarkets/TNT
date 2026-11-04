@@ -23,7 +23,7 @@ export function assertNoRouteConflicts(modules: AppModule[]): void {
   }
 }
 
-// Express hides a nested router's mount path, so we forbid mounting under one.
+// Express hides a nested router's mount path, so we forbid mounting under one
 function routesOf(stack: Layer[]): string[] {
   return stack.flatMap((layer) => {
     if (layer.route) {

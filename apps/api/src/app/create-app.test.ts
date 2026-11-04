@@ -8,7 +8,7 @@ import { parseRequest } from "#platform/http/parse-request.ts";
 import { request } from "#test/http.ts";
 import { createApp } from "./create-app.ts";
 
-// postgres.js connects on the first query; these tests never query.
+// postgres.js connects on the first query; these tests never query
 const db = createDb({
   host: "localhost",
   port: 1,

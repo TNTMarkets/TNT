@@ -21,7 +21,7 @@ export async function runMigrations(db: DbPool): Promise<string[]> {
     .map((entry) => entry.tag);
 }
 
-// Drizzle saves each migration's journal `when` as created_at.
+// Drizzle saves each migration's journal `when` as created_at
 async function lastAppliedAt(db: DbPool): Promise<number> {
   const [table] = await db.execute<{ name: string | null }>(
     sql`select to_regclass('drizzle.__drizzle_migrations') as name`,

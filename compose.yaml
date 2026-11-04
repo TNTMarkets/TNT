@@ -47,7 +47,7 @@ services:
     volumes:
       - db-data:/var/lib/postgresql
     healthcheck:
-      # -h localhost: over the network Postgres answers only after it has created the user and database.
+      # -h localhost: over the network Postgres answers only after it has created the user and database
       test: pg_isready -h localhost -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"
       interval: 2s
       timeout: 3s

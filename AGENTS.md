@@ -24,13 +24,17 @@ say why and propose changing the rule.
 
 ## Code
 
-- Tests first: agree on behavior, write tests that fail on their assertion (not on an import),
-  then code. Never bend a test to fit the code; if a test is wrong, say so first.
+- Tests first: agree on behavior with the user; write the tests plus only the empty stubs they need
+  to load (files, exports, routes); see each fail because the behavior is missing (a failed
+  assertion, a timeout, an error on the missing result), never because something can't load; then
+  code. Don't rewrite a test to change how it fails or to make it pass; if a test is wrong, say so
+  first and wait. Infra that can't be tested: verify by hand, and name the issue that adds the test.
 - DI by hand, no container: modules get their dependencies (db, clients, config) as arguments or
   props; they never export a live instance or read env. Only the code that starts a process wires
   them up.
 - React Compiler is on in web: no manual `useMemo` or `useCallback`.
-- Comments only for what code can't say: a product decision or a deliberate workaround, with the reason.
+- Comments only for what code can't say: a product decision or a deliberate workaround, with the
+  reason. Short, no trailing period.
 
 ## Secrets
 

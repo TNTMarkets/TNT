@@ -14,13 +14,18 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "typecheck": "tsc && tsc -p e2e",
+    "test": "vitest run --project unit",
     "test:e2e": "playwright test --config e2e/playwright.config.ts",
     "test:screenshots": "vitest run --project screenshots",
     "test:screenshots:update": "vitest run --project screenshots --update"
   },
   "dependencies": {
+    "@tanstack/react-query": "catalog:",
+    "@tanstack/react-router": "catalog:",
+    "@tnt/api-schemas": "workspace:*",
     "react": "catalog:",
-    "react-dom": "catalog:"
+    "react-dom": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@babel/core": "catalog:",
