@@ -24,6 +24,7 @@ vitest.config.ts                   @Udobnaja @LavrAnastasia
 /pnpm-workspace.yaml      @Udobnaja @LavrAnastasia
 /tsconfig.base.json       @Udobnaja @LavrAnastasia
 /eslint.config.js         @Udobnaja @LavrAnastasia
+/eslint/                  @Udobnaja @LavrAnastasia
 /prettier.config.js       @Udobnaja @LavrAnastasia
 /lefthook.yml             @Udobnaja @LavrAnastasia
 /.nvmrc                   @Udobnaja @LavrAnastasia

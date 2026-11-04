@@ -21,7 +21,7 @@ export function dbConfigFromEnv(
       .filter(([, value]) => !value)
       .map(([name]) => name);
     throw new Error(
-      `Not set: ${missing.join(", ")}. Locally: copy .env.example to .env (scripts/setup.sh does it).`,
+      `Not set: ${missing.join(", ")}. Locally: run scripts/setup.sh, it creates .env.`,
     );
   }
 

@@ -77,4 +77,6 @@ fi
 step "dependencies and git hooks"
 pnpm install
 
-printf '\nDone. Open a new terminal, run `nvm use` in the repo, then: pnpm --filter @tnt/api dev\n'
+printf '\nDone. Open a new terminal, run `nvm use` in the repo, then start Docker and run:\n'
+printf '  pnpm --filter @tnt/api dev   # api on :3000, starts the db\n'
+printf '  pnpm --filter @tnt/web dev   # web on http://localhost:5173\n'

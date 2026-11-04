@@ -109,6 +109,21 @@ describe("request bodies", () => {
     ).toEqual({ status: 400, body: { error: { code: "invalid_request" } } });
   });
 
+  test("another body the parser rejects keeps its 4xx status, unlogged", async () => {
+    const logError = vi.fn();
+    const app = createApp({ db, logError, modules: [echo] });
+
+    expect(
+      await request(app, {
+        method: "POST",
+        path: "/api/echo",
+        rawBody: "{}",
+        headers: { "content-type": "application/json; charset=koi8-r" },
+      }),
+    ).toEqual({ status: 415, body: { error: { code: "invalid_request" } } });
+    expect(logError).not.toHaveBeenCalled();
+  });
+
   test("a body over 100 kB is 413 payload_too_large", async () => {
     const app = createApp({ db, modules: [echo] });
 

@@ -35,9 +35,9 @@ say why and propose changing the rule.
 - React Compiler is on in web: no manual `useMemo` or `useCallback`.
 - api route handler: `parseRequest(schema, req.body | req.params | req.query)`, call one module
   function, passing it `db`, answer through the response schema; request and response schemas live
-  in `@tnt/api-schemas`. Fail with `HttpError(status, code)`. Logic and transactions live in that
-  function, not in the handler.
-  Query params arrive as strings: `z.coerce.number()`, `z.stringbool()`.
+  in `@tnt/api-schemas` and describe JSON (dates are `z.iso.datetime()` strings, no `transform`).
+  Fail with `HttpError(status, code)`. Logic and transactions live in that function, not in the
+  handler. Query params arrive as strings: `z.coerce.number()`, `z.stringbool()`.
 - Web routes are code in `apps/web/src/app/router.tsx`, not file-based.
 - UI text is plain English until TNT-22; mark each component that has it with
   `// TODO: TNT-22 — move this UI text to translation keys`.
@@ -57,9 +57,9 @@ say why and propose changing the rule.
 - e2e specs import `test` and `expect` from `apps/web/e2e/test.ts`, never `@playwright/test`,
   which skips our console check.
 - Until TNT-22 fixes the e2e locale, don't match on UI text (`getByText`, or `getByRole` with
-  `name`).
-- Every UI component gets a story. `tags: ["skip-screenshot"]` only for output you can't make
-  stable (fixed dates, seeds).
+  `name`): match by `data-testid`.
+- Every component with its own markup gets a story. `tags: ["skip-screenshot"]` only for output
+  you can't make stable (fixed dates, seeds).
 - New story: write it, then check the new baseline. Update baselines only for a visual change you
   meant to make, and say so in the PR.
 

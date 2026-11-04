@@ -32,9 +32,9 @@ module's `index.ts` and never write them.
 CI's `check:migrations` fails when your migration is older than the newest one on `main`
 (someone merged theirs first). Then:
 
-1. Delete your migration: its `.sql` file in `apps/api/drizzle/`, its snapshot in `meta/` and its
-   entry in `meta/_journal.json`.
-2. Rebase on `main`.
+1. `pnpm --filter @tnt/api exec drizzle-kit drop` and pick your migration: it removes the SQL, the
+   snapshot and the journal entry.
+2. Update your branch from `main`.
 3. Generate it again.
 
 ## Tests

@@ -34,7 +34,7 @@ test("names every missing credential and how to fix it", () => {
   const missing = () => dbConfigFromEnv({ POSTGRES_DB: "market" });
 
   expect(missing).toThrow("POSTGRES_USER, POSTGRES_PASSWORD");
-  expect(missing).toThrow("copy .env.example to .env");
+  expect(missing).toThrow("run scripts/setup.sh");
 });
 
 test("an empty host or port falls back to the default", () => {

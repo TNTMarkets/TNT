@@ -8,11 +8,13 @@ export async function request(
     path,
     body,
     rawBody,
+    headers = {},
   }: {
     method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
     path: string;
     body?: unknown;
     rawBody?: string;
+    headers?: Record<string, string>;
   },
 ): Promise<{ status: number; body: unknown }> {
   const { port, shutdown } = await serve(app, { port: 0, onClose: () => {} });
@@ -22,7 +24,7 @@ export async function request(
       ...(body === undefined && rawBody === undefined
         ? {}
         : {
-            headers: { "content-type": "application/json" },
+            headers: { "content-type": "application/json", ...headers },
             body: rawBody ?? JSON.stringify(body),
           }),
     });

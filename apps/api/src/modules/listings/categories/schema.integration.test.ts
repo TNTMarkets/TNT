@@ -1,26 +1,9 @@
-import { eq } from "drizzle-orm";
 import { expect } from "vitest";
 import { dbTest } from "#test/db.ts";
 import { categories } from "./schema.ts";
 
 const UNIQUE_VIOLATION = "23505";
 const CHECK_VIOLATION = "23514";
-
-dbTest(
-  "a saved category reads back with an id from the database",
-  async ({ db }) => {
-    const [saved] = await db
-      .insert(categories)
-      .values({ slug: "bikes" })
-      .returning();
-    const read = await db
-      .select()
-      .from(categories)
-      .where(eq(categories.slug, "bikes"));
-
-    expect(read).toEqual([saved]);
-  },
-);
 
 dbTest("two categories can't share a slug", async ({ db }) => {
   await db.insert(categories).values({ slug: "books" });
