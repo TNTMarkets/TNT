@@ -62,6 +62,24 @@ describe("layers", () => {
       await violations("apps/api/src/utils/x.ts", "export const x = 1;"),
     ).toContain("boundaries/no-unknown-files");
   });
+
+  test("a test file can import test helpers", async () => {
+    expect(
+      await violations(
+        "apps/api/src/modules/listings/x.integration.test.ts",
+        'export * from "#test/db.ts";',
+      ),
+    ).toEqual([]);
+  });
+
+  test("production code can't import test helpers", async () => {
+    expect(
+      await violations(
+        "apps/api/src/modules/listings/x.ts",
+        'export * from "#test/db.ts";',
+      ),
+    ).toContain("boundaries/dependencies");
+  });
 });
 
 describe("module to module", () => {

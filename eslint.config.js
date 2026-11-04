@@ -28,6 +28,11 @@ export default defineConfig([
       jsxA11y.flatConfigs.recommended,
     ],
   },
+  {
+    rules: {
+      "no-empty-pattern": ["error", { allowObjectPatternsAsParameters: true }],
+    },
+  },
   ...boundariesConfig(),
   ...conventions,
   prettier,

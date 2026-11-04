@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { sql } from "drizzle-orm";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
-import type { Db } from "./db.ts";
+import type { DbPool } from "./db.ts";
 import type { JournalEntry } from "./migration-order.ts";
 
 const migrationsFolder = fileURLToPath(
@@ -10,7 +10,7 @@ const migrationsFolder = fileURLToPath(
 );
 const journalFile = `${migrationsFolder}/meta/_journal.json`;
 
-export async function runMigrations(db: Db): Promise<string[]> {
+export async function runMigrations(db: DbPool): Promise<string[]> {
   const lastAppliedBefore = await lastAppliedAt(db);
   await migrate(db, { migrationsFolder });
   const journal = JSON.parse(await readFile(journalFile, "utf8")) as {
@@ -22,7 +22,7 @@ export async function runMigrations(db: Db): Promise<string[]> {
 }
 
 // Drizzle saves each migration's journal `when` as created_at.
-async function lastAppliedAt(db: Db): Promise<number> {
+async function lastAppliedAt(db: DbPool): Promise<number> {
   const [table] = await db.execute<{ name: string | null }>(
     sql`select to_regclass('drizzle.__drizzle_migrations') as name`,
   );

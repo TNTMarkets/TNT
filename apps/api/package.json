@@ -6,7 +6,8 @@
     "#app/*": "./src/app/*",
     "#platform/*": "./src/platform/*",
     "#modules/*": "./src/modules/*",
-    "#shared/*": "./src/shared/*"
+    "#shared/*": "./src/shared/*",
+    "#test/*": "./test/*"
   },
   "scripts": {
     "compose:dev": "pnpm -w exec docker compose -f compose.yaml -f compose.dev.yaml",

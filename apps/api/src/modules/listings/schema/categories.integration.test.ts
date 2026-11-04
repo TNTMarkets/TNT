@@ -1,31 +1,28 @@
 import { eq } from "drizzle-orm";
-import { afterAll, expect, inject, test } from "vitest";
-import { createDb } from "#platform/db/db.ts";
+import { expect } from "vitest";
+import { dbTest } from "#test/db.ts";
 import { categories } from "./categories.ts";
 
 const UNIQUE_VIOLATION = "23505";
 const CHECK_VIOLATION = "23514";
 
-const db = createDb(inject("dbConfig"));
+dbTest(
+  "a saved category reads back with an id from the database",
+  async ({ db }) => {
+    const [saved] = await db
+      .insert(categories)
+      .values({ slug: "bikes" })
+      .returning();
+    const read = await db
+      .select()
+      .from(categories)
+      .where(eq(categories.slug, "bikes"));
 
-afterAll(async () => {
-  await db.$client.end();
-});
+    expect(read).toEqual([saved]);
+  },
+);
 
-test("a saved category reads back with an id from the database", async () => {
-  const [saved] = await db
-    .insert(categories)
-    .values({ slug: "bikes" })
-    .returning();
-  const read = await db
-    .select()
-    .from(categories)
-    .where(eq(categories.slug, "bikes"));
-
-  expect(read).toEqual([saved]);
-});
-
-test("two categories can't share a slug", async () => {
+dbTest("two categories can't share a slug", async ({ db }) => {
   await db.insert(categories).values({ slug: "books" });
 
   await expect(
@@ -33,9 +30,9 @@ test("two categories can't share a slug", async () => {
   ).rejects.toMatchObject({ cause: { code: UNIQUE_VIOLATION } });
 });
 
-test.each(["Books", "home garden", "-books", "books-", "a--b", "книги"])(
+dbTest.for(["Books", "home garden", "-books", "books-", "a--b", "книги"])(
   "slug %j is rejected: only a-z, digits and single dashes",
-  async (slug) => {
+  async (slug, { db }) => {
     await expect(db.insert(categories).values({ slug })).rejects.toMatchObject({
       cause: { code: CHECK_VIOLATION },
     });

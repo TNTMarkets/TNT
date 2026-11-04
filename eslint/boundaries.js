@@ -34,10 +34,10 @@ const moduleIndex = (captured) => ({
 });
 
 export function boundariesConfig(deps = moduleDeps) {
-  const crossModule = Object.entries(deps).flatMap(([app, graph]) =>
+  const crossModule = Object.entries(deps).flatMap(([appName, graph]) =>
     Object.entries(graph).map(([module, allowed]) => ({
-      from: { element: { type: "module", captured: { app, module } } },
-      allow: allowed.map((target) => moduleIndex({ app, module: target })),
+      from: { element: { type: "module", captured: { appName, module } } },
+      allow: allowed.map((target) => moduleIndex({ appName, module: target })),
     })),
   );
 
@@ -60,18 +60,24 @@ export function boundariesConfig(deps = moduleDeps) {
             ],
             category: "entry",
           },
+          { pattern: "apps/*/src/**/*.test.{ts,tsx}", category: "test" },
         ],
         "boundaries/elements": [
+          { type: "test-support", pattern: "apps/*/test" },
           { type: "package", pattern: "packages/*" },
-          { type: "app", pattern: "apps/*/src/app", capture: ["app"] },
+          { type: "app", pattern: "apps/*/src/app", capture: ["appName"] },
           { type: "page", pattern: "apps/web/src/pages/*", capture: ["page"] },
           {
             type: "module",
             pattern: "apps/*/src/modules/*",
-            capture: ["app", "module"],
+            capture: ["appName", "module"],
           },
           { type: "platform", pattern: "apps/api/src/platform" },
-          { type: "shared", pattern: "apps/*/src/shared", capture: ["app"] },
+          {
+            type: "shared",
+            pattern: "apps/*/src/shared",
+            capture: ["appName"],
+          },
         ],
       },
       rules: {
@@ -82,6 +88,10 @@ export function boundariesConfig(deps = moduleDeps) {
             default: "disallow",
             checkUnknownLocals: true,
             policies: [
+              {
+                from: { file: { categories: "test" } },
+                allow: [layer("test-support")],
+              },
               {
                 from: { file: { categories: "entry" } },
                 allow: [
@@ -126,7 +136,7 @@ export function boundariesConfig(deps = moduleDeps) {
                       element: {
                         type: "module",
                         captured: {
-                          app: "{{ from.element.captured.app }}",
+                          appName: "{{ from.element.captured.appName }}",
                           module: "{{ from.element.captured.module }}",
                         },
                       },
