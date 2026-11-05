@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# One-time setup for a fresh clone; safe to re-run. Installs nothing system-wide (no sudo).
+# One-time setup for a fresh clone; safe to re-run. Installs nothing system-wide (no sudo)
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -23,7 +23,7 @@ if [ "$(node -p 'process.versions.node.split(".")[0]' 2>/dev/null || true)" != "
     echo "Installing nvm $NVM_VERSION into $NVM_DIR (it adds itself to your shell profile)"
     curl -fsSL "https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh" | bash
   fi
-  # nvm.sh fails under `set -eu`, so it runs with them off.
+  # nvm.sh fails under `set -eu`, so it runs with them off
   set +eu
   . "$NVM_DIR/nvm.sh"
   nvm install || fail "nvm couldn't install Node $node_major."
@@ -70,11 +70,13 @@ step ".env"
 if [ -e .env ]; then
   echo ".env exists, left as is"
 else
-  cp .env.example .env
-  echo "Created .env from .env.example"
+  sed "s/^POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=$(openssl rand -hex 16)/" .env.example >.env
+  echo "Created .env from .env.example with a random POSTGRES_PASSWORD"
 fi
 
 step "dependencies and git hooks"
 pnpm install
 
-printf '\nDone. Open a new terminal, run `nvm use` in the repo, then: pnpm --filter @tnt/api dev\n'
+printf '\nDone. Open a new terminal, run `nvm use` in the repo, then start Docker and run:\n'
+printf '  pnpm --filter @tnt/api dev   # api on :3000, starts the db\n'
+printf '  pnpm --filter @tnt/web dev   # web on http://localhost:5173\n'

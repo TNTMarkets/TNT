@@ -2,7 +2,7 @@ name: tnt
 
 x-postgres-credentials: &postgres-credentials
   POSTGRES_USER: ${POSTGRES_USER:-tnt}
-  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-tnt}
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set it in .env (scripts/setup.sh creates one)}
   POSTGRES_DB: ${POSTGRES_DB:-tnt}
 
 services:
@@ -24,6 +24,9 @@ services:
       dockerfile: apps/api/Dockerfile
     init: true
     restart: unless-stopped
+    environment:
+      <<: *postgres-credentials
+      POSTGRES_HOST: db
     depends_on:
       migrate:
         condition: service_completed_successfully
@@ -44,7 +47,7 @@ services:
     volumes:
       - db-data:/var/lib/postgresql
     healthcheck:
-      # -h localhost: over the network Postgres answers only after it has created the user and database.
+      # -h localhost: over the network Postgres answers only after it has created the user and database
       test: pg_isready -h localhost -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"
       interval: 2s
       timeout: 3s

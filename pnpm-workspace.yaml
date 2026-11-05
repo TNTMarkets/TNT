@@ -11,6 +11,8 @@ catalog:
   '@storybook/addon-vitest': ^10.6.5
   '@storybook/react-vite': ^10.6.5
   '@tailwindcss/vite': ^4.3.3
+  '@tanstack/react-query': 5.104.5
+  '@tanstack/react-router': 1.170.46
   '@testcontainers/postgresql': ^12.2.1
   '@types/express': ^5.0.6
   '@types/node': ^26.6.5
@@ -23,6 +25,8 @@ catalog:
   drizzle-orm: ^0.45.4
   eslint: ^10.13.0
   eslint-config-prettier: ^10.1.8
+  eslint-import-resolver-typescript: 4.4.5
+  eslint-plugin-boundaries: 7.2.1
   eslint-plugin-jsx-a11y: ^6.10.2
   eslint-plugin-react-hooks: ^7.1.1
   eslint-plugin-react-refresh: ^0.5.7
@@ -49,7 +53,7 @@ strictDepBuilds: true
 
 peerDependencyRules:
   allowedVersions:
-    # jsx-a11y 6.10.2 works with ESLint 10 but doesn't declare it yet; remove once it does (jsx-eslint/eslint-plugin-jsx-a11y#1081).
+    # jsx-a11y 6.10.2 works with ESLint 10 but doesn't declare it yet; remove once it does (jsx-eslint/eslint-plugin-jsx-a11y#1081)
     eslint-plugin-jsx-a11y>eslint: "10"
 
 allowBuilds:

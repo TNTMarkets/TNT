@@ -1,5 +1,5 @@
 #!/bin/sh
-# Detached HEAD (e.g. editing a commit during rebase) is not a branch; allow it.
+# Detached HEAD (e.g. editing a commit during rebase) is not a branch; allow it
 branch=$(git symbolic-ref --short -q HEAD) || exit 0
 
 if ! printf '%s' "$branch" | grep -Eq '^[a-z0-9-]+\.TNT-[1-9][0-9]*\.[a-z0-9]+(-[a-z0-9]+)*$'; then

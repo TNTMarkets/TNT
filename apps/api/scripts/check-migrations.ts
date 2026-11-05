@@ -4,7 +4,7 @@ import {
   editedMigrations,
   type JournalEntry,
   migrationsOlderThanMain,
-} from "../src/platform/db/migration-order.ts";
+} from "#platform/db/migration-order.ts";
 
 const [mainFolder, branchFolder] = process.argv.slice(2);
 if (!mainFolder || !branchFolder) {

@@ -9,8 +9,14 @@
 
 ## Unit and integration
 
-- Rerun on every save: `pnpm --filter @tnt/api exec vitest`.
+- Rerun on every save: `pnpm --filter @tnt/api exec vitest` (or `@tnt/web`).
 - Integration tests start a fresh Postgres from `compose.yaml` and remove it afterwards.
+- A test that touches the db uses `dbTest` from `#test/db.ts`: it runs in a transaction that's
+  rolled back afterwards, so tests don't see each other's data.
+- After a db error inside `dbTest`, Postgres refuses further queries in that transaction. If the
+  test continues after an expected error, wrap the failing query in `db.transaction(...)`.
+- Test api routes through the real app, so the parser and error handler run too:
+  `request(createApp({ db, modules: [createXModule({ db })] }), { path })` from `#test/http.ts`.
 - Docker off → Vitest prints "No test files found". That's a known Vitest bug (vitest#11682):
   start Docker and run again.
 

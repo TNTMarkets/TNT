@@ -3,8 +3,10 @@ WORKDIR /repo
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.base.json ./
 RUN npm install --global "$(node -p "require('./package.json').packageManager")"
 COPY apps/web/package.json apps/web/
+COPY packages/api-schemas/package.json packages/api-schemas/
 RUN pnpm install --frozen-lockfile --ignore-scripts --filter @tnt/web...
 COPY apps/web apps/web
+COPY packages/api-schemas packages/api-schemas
 RUN pnpm --filter @tnt/web build
 
 FROM nginx:1.30.6-trixie@sha256:51047bea59fed88fbd1f52565d2f5fabcb82d311cf6c9e507a10ce74bb3bc3f0

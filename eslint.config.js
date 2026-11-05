@@ -5,6 +5,8 @@ import jsxA11y from "eslint-plugin-jsx-a11y";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
+import { boundariesConfig } from "./eslint/boundaries.js";
+import { conventions } from "./eslint/conventions.js";
 
 export default defineConfig([
   globalIgnores(["**/dist/"]),
@@ -17,6 +19,12 @@ export default defineConfig([
         tsconfigRootDir: import.meta.dirname,
       },
     },
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_" },
+      ],
+    },
   },
   {
     files: ["apps/web/src/**/*.{ts,tsx}"],
@@ -26,5 +34,12 @@ export default defineConfig([
       jsxA11y.flatConfigs.recommended,
     ],
   },
+  {
+    rules: {
+      "no-empty-pattern": ["error", { allowObjectPatternsAsParameters: true }],
+    },
+  },
+  ...boundariesConfig(),
+  ...conventions,
   prettier,
 ]);

@@ -1,1 +1,1 @@
-export * from "./schema/categories.ts";
+export * from "./categories/schema.ts";

@@ -1,5 +1,5 @@
 #!/bin/sh
-# Local HTTPS: a self-signed certificate made once and kept in the certs volume, so the browser warns only once.
+# Local HTTPS: a self-signed certificate made once and kept in the certs volume, so the browser warns only once
 set -eu
 dir=/etc/nginx/certs
 mkdir -p "$dir"
