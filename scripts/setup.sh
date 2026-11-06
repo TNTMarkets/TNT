@@ -21,6 +21,8 @@ export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
 if [ "$(node -p 'process.versions.node.split(".")[0]' 2>/dev/null || true)" != "$node_major" ]; then
   if [ ! -s "$NVM_DIR/nvm.sh" ]; then
     echo "Installing nvm $NVM_VERSION into $NVM_DIR (it adds itself to your shell profile)"
+    # nvm adds itself only to a profile that exists
+    touch "$HOME/.$(basename "${SHELL:-bash}")rc"
     curl -fsSL "https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh" | bash
   fi
   # nvm.sh fails under `set -eu`, so it runs with them off
