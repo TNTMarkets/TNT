@@ -59,7 +59,7 @@ say why and propose changing the rule.
 - Until TNT-22 fixes the e2e locale, don't match on UI text (`getByText`, or `getByRole` with
   `name`): match by `data-testid`.
 - Every component with its own markup gets a story. `tags: ["skip-screenshot"]` only for output
-  that stays unstable after fixing dates and seeds, e.g. animation.
+  that stays unstable after fixing dates and seeds, e.g. JS-driven animation.
 - Stories skip tests-first. New story: check the baseline shows the component correctly. Update
   baselines only for a visual change you meant to make: check the diff is what you meant, and say
   so in the PR.
