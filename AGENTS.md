@@ -19,8 +19,8 @@ say why and propose changing the rule.
   the Linear MCP after the user agrees. Never invent a number.
 - Branch `<nick>.TNT-<n>.<kebab-description>`; nick from `git config tnt.nick` (if empty, ask and set it).
 - Squash merge: the PR title `TNT-<n>: <what changed>` becomes the commit on `main`.
-- Before a PR, a fresh-context reviewer checks the diff against this file and reports merge
-  blockers only: wrong behavior, rule violations. No style.
+- Aim for PRs under ~400 changed lines of code; bigger means sub-issues.
+- Open PRs with the `create-pr` skill; it runs the review.
 
 ## Code
 
