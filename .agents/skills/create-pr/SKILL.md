@@ -12,15 +12,17 @@ description:
 2. Uncommitted changes, untracked files included: ask the user to commit them, and wait; the PR
    must contain what gets reviewed.
 3. Run the checks `AGENTS.md` lists; on a failure, stop and show it.
-4. Review: start a fresh-context subagent (in a tool without subagents, a new session) on the
-   branch's whole diff from `origin/main`. It reports merge blockers only, no style:
+4. Review: start a fresh-context subagent (in a tool without subagents, a new session) on
+   `git diff $(git merge-base origin/main HEAD)`: the branch plus fixes not yet committed. It
+   reports merge blockers only, no style:
    - wrong behavior, including regressions in what worked before;
    - violations of `AGENTS.md`;
    - dead code: unused exports, files, branches, dependencies;
    - tests that duplicate another test or can't fail;
    - `AGENTS.md` or `docs/` left stale by the change, or now contradicting each other.
 
-   Show the blockers and fix them after a yes. Blockers the user leaves open go in the PR body.
+   Show the blockers and fix them after a yes, then ask whether to run another review with a new
+   subagent. Blockers the user leaves open go in the PR body. Ask the user to commit the fixes.
 
 5. Size: added plus deleted lines in
    `git diff --numstat origin/main...HEAD -- . ':(exclude)pnpm-lock.yaml' ':(exclude,glob)**/__screenshots__/**' ':(exclude)apps/api/drizzle/meta'`;
