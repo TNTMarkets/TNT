@@ -15,9 +15,9 @@ say why and propose changing the rule.
 
 ## Tasks, branches, PRs
 
-- Code changes start from a Linear issue `TNT-<n>`: ask for it, or propose one and create it via
-  the Linear MCP after the user agrees. Never invent a number.
-- Branch `<nick>.TNT-<n>.<kebab-description>`; nick from `git config tnt.nick` (if empty, ask and set it).
+- Before the first code edit, have a Linear issue `TNT-<n>` (the `start-issue` skill); never invent
+  a number.
+- Branch `<nick>.TNT-<n>.<kebab-description>`, nick from `git config tnt.nick`.
 - Squash merge: the PR title `TNT-<n>: <what changed>` becomes the commit on `main`.
 - Aim for PRs under ~400 changed lines of code; bigger means sub-issues.
 - Open PRs with the `create-pr` skill; it runs the review.

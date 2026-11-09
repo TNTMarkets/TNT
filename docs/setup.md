@@ -54,6 +54,26 @@ pnpm --filter @tnt/web dev   # web on http://localhost:5173
 
 Stop each with Ctrl+C. The db keeps running until `docker compose down`.
 
+## Agents
+
+Rules for every agent are in `AGENTS.md`. Skills `start-issue` and `create-pr` are in
+`.agents/skills/`; agents also pick them on their own when a task matches.
+
+|              | Claude Code                                                 | Codex (CLI, VS Code)     | Cursor                    |
+| ------------ | ----------------------------------------------------------- | ------------------------ | ------------------------- |
+| Run a skill  | `/start-issue`                                              | `$start-issue`           | `/start-issue`            |
+| Linear MCP   | approve `linear-tnt` on first start, then `/mcp` to sign in | add it, see below        | Settings → MCP, sign in   |
+| Secrets hook | on                                                          | once: `/hooks`, trust it | on in a trusted workspace |
+
+Codex reads MCP servers only from your own config. Add to `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.linear-tnt]
+url = "https://mcp.linear.app/mcp"
+```
+
+Then sign in: `codex mcp login linear-tnt`, or **Authenticate** in the VS Code extension.
+
 ## Next
 
 - Tests: `docs/testing.md`
