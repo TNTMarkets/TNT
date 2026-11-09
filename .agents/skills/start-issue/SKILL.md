@@ -19,10 +19,11 @@ description:
    - it is assigned to someone else: to take it, the user reassigns it in Linear by hand.
 4. Sub-issues:
    - it has open sub-issues: list them, ask which one to take, then start over with that one;
-   - it has none, but it needs both `api` and `web`, or looks over the PR size limit in `AGENTS.md`: propose
-     `api` and `web` sub-issues (titles and scope split from the parent) and create them after a
-     yes, as children of this issue with its project, cycle and Type label, plus the `api` or `web`
-     label; if web needs the api first, mark web as blocked by api; then ask which one to take.
+   - it has none, but it needs both `api` and `web`, or looks over the PR size limit in
+     `AGENTS.md`: propose `api` and `web` sub-issues (titles and scope split from the parent) and
+     create them after a yes, as children of this issue with its project, cycle and Type label,
+     plus the `api` or `web` label; if web needs the api first, mark web as blocked by api; then
+     ask which one to take.
 5. Branch, named as in `AGENTS.md`:
    - nick: `git config tnt.nick`; empty: ask, then `git config tnt.nick <nick>`;
    - description: 2–4 kebab-case words from the title;

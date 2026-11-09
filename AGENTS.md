@@ -19,7 +19,7 @@ say why and propose changing the rule.
   a number.
 - Branch `<nick>.TNT-<n>.<kebab-description>`, nick from `git config tnt.nick`.
 - Squash merge: the PR title `TNT-<n>: <what changed>` becomes the commit on `main`.
-- Aim for PRs under ~400 changed lines of code; bigger means sub-issues.
+- PR size limit: ~400 changed lines of code; bigger means sub-issues.
 - Open PRs with the `create-pr` skill; it runs the review.
 
 ## Code
@@ -88,6 +88,7 @@ Commands inside Docker images aren't in the workspace; this rule doesn't apply t
 - A new module (rather than a feature in an existing one) is the user's call. Once agreed, add it
   to `createApp`'s `modules` in `apps/api/src/main.ts`, or its routes answer 404.
 - For module A to import module B, add B to A's list in `moduleDeps` (`eslint/boundaries.js`),
-  e.g. `chat: ["listings"]` lets chat import listings. Ask the user first.
+  under its app, e.g. `api: { chat: ["listings"] }` lets the api's chat import listings. Ask the
+  user first.
 - Realtime (Socket.io, not installed yet) goes in `apps/api/src/platform/realtime`, not in a
   module: chat and notifications send events through it, so they don't import each other.

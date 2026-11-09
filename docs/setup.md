@@ -56,7 +56,7 @@ Stop each with Ctrl+C. The db keeps running until `docker compose down`.
 
 ## Agents
 
-Rules for every agent are in `AGENTS.md`. Skills `start-issue` and `create-pr` are in
+Rules for every agent are in `AGENTS.md`. Skills `onboard`, `start-issue` and `create-pr` are in
 `.agents/skills/`; agents also pick them on their own when a task matches.
 
 |              | Claude Code                                                 | Codex (CLI, VS Code)     | Cursor                    |
