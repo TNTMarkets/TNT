@@ -15,20 +15,21 @@ say why and propose changing the rule.
 
 ## Tasks, branches, PRs
 
-- Code changes start from a Linear issue `TNT-<n>`: ask for it, or propose one and create it via
-  the Linear MCP after the user agrees. Never invent a number.
-- Branch `<nick>.TNT-<n>.<kebab-description>`; nick from `git config tnt.nick` (if empty, ask and set it).
+- Before the first code edit, have a Linear issue `TNT-<n>` (the `start-issue` skill); never invent
+  a number.
+- Branch `<nick>.TNT-<n>.<kebab-description>`, nick from `git config tnt.nick`.
 - Squash merge: the PR title `TNT-<n>: <what changed>` becomes the commit on `main`.
-- Before a PR, a fresh-context reviewer checks the diff against this file and reports merge
-  blockers only: wrong behavior, rule violations. No style.
+- PR size limit: ~400 changed lines of code; bigger means sub-issues.
+- Open PRs with the `create-pr` skill; it runs the review.
 
 ## Code
 
-- Tests first: agree on behavior with the user; write the tests plus only the empty stubs they need
-  to load (files, exports, routes); see each fail because the behavior is missing (a failed
-  assertion, a timeout, an error on the missing result), never because something can't load; then
-  code. Don't rewrite a test to change how it fails or to make it pass; if a test is wrong, say so
-  first and wait. Infra that can't be tested: verify by hand, and name the issue that adds the test.
+- Tests first, for product code in `apps/` and `packages/`: agree on behavior with the user; write
+  the tests plus only the empty stubs they need to load (files, exports, routes); see each fail
+  because the behavior is missing (a failed assertion, a timeout, an error on the missing result),
+  never because something can't load; then code. Don't rewrite a test to change how it fails or to
+  make it pass; if a test is wrong, say so first and wait. Infra that can't be tested: verify by
+  hand, and name the issue that adds the test.
 - DI by hand, no container: modules get their dependencies (db, clients, config) as arguments or
   props; they never export a live instance or read env. Only the code that starts a process wires
   them up.
@@ -87,6 +88,7 @@ Commands inside Docker images aren't in the workspace; this rule doesn't apply t
 - A new module (rather than a feature in an existing one) is the user's call. Once agreed, add it
   to `createApp`'s `modules` in `apps/api/src/main.ts`, or its routes answer 404.
 - For module A to import module B, add B to A's list in `moduleDeps` (`eslint/boundaries.js`),
-  e.g. `chat: ["listings"]` lets chat import listings. Ask the user first.
+  under its app, e.g. `api: { chat: ["listings"] }` lets the api's chat import listings. Ask the
+  user first.
 - Realtime (Socket.io, not installed yet) goes in `apps/api/src/platform/realtime`, not in a
   module: chat and notifications send events through it, so they don't import each other.

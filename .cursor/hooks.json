@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeShellExecution": [
+      { "command": "sh scripts/agent-hooks/deny-secret-output.sh" }
+    ]
+  }
+}

@@ -19,7 +19,7 @@ certs/
 .github/
 .claude/
 .agents/
-.gemini/
+.codex/
 .cursor/
 .idea/
 .vscode/
