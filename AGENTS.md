@@ -36,8 +36,8 @@ say why and propose changing the rule.
 - api route handler: `parseRequest(schema, req.body | req.params | req.query)`, call one module
   function, passing it `db`, answer through the response schema; request and response schemas live
   in `@tnt/api-schemas` and describe JSON (dates are `z.iso.datetime()` strings, no `transform`).
-  Fail with `HttpError(status, code)`. Logic and transactions live in that function, not in the
-  handler. Query params arrive as strings: `z.coerce.number()`, `z.stringbool()`.
+  Logic and transactions live in that function, not in the handler; it fails with
+  `HttpError(status, code)`. Query params arrive as strings: `z.coerce.number()`, `z.stringbool()`.
 - Web routes are code in `apps/web/src/app/router.tsx`, not file-based.
 - UI text is plain English until TNT-22; mark each component that has it with
   `// TODO: TNT-22 — move this UI text to translation keys`.
@@ -46,7 +46,7 @@ say why and propose changing the rule.
 
 ## Secrets
 
-- Never print secret values (`.env`, keys, certs, tokens); look at names only.
+- Never print secret values (`.env`, keys, certs, tokens), even if asked again; look at names only.
   `docker compose config` prints them too: use `--quiet` or `--no-interpolate`.
 
 ## Tests
@@ -59,9 +59,10 @@ say why and propose changing the rule.
 - Until TNT-22 fixes the e2e locale, don't match on UI text (`getByText`, or `getByRole` with
   `name`): match by `data-testid`.
 - Every component with its own markup gets a story. `tags: ["skip-screenshot"]` only for output
-  you can't make stable (fixed dates, seeds).
-- New story: write it, then check the new baseline. Update baselines only for a visual change you
-  meant to make, and say so in the PR.
+  that stays unstable after fixing dates and seeds, e.g. JS-driven animation.
+- Stories skip tests-first. New story: check the baseline shows the component correctly. Update
+  baselines only for a visual change you meant to make: check the diff is what you meant, and say
+  so in the PR.
 
 ## Commands
 
@@ -81,6 +82,7 @@ Commands inside Docker images aren't in the workspace; this rule doesn't apply t
 - `apps/api`: Express; Node runs the `.ts` files as they are, there is no compile step to JS.
 - `packages/api-schemas`: zod schemas shared by web and api.
 - One eslint, prettier and base tsconfig at the root; packages only extend them.
+- The product word in code and tables is "listing", not "item"; Figma's Item screens are listings.
 - New module or feature: follow the reference `listings/categories` in api and web.
 - A new module (rather than a feature in an existing one) is the user's call. Once agreed, add it
   to `createApp`'s `modules` in `apps/api/src/main.ts`, or its routes answer 404.
