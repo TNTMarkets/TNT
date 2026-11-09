@@ -31,6 +31,5 @@ CLAUDE.local.md
 .claude/plans/
 .claude/worktrees/
 AGENTS.local.md
-.cursor/
-.gemini/*
-!.gemini/settings.json
+.cursor/*
+!.cursor/mcp.json
