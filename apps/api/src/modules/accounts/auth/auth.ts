@@ -5,6 +5,8 @@ import type { Db } from "#platform/db/db.ts";
 import type { AuthConfig } from "./config.ts";
 import * as schema from "./schema.ts";
 
+const INTRA42_API = "https://api.intra.42.fr";
+
 export function createAuth({
   db,
   config,
@@ -27,14 +29,14 @@ export function createAuth({
             providerId: "42",
             clientId: config.intra42.clientId,
             clientSecret: config.intra42.clientSecret,
-            authorizationUrl: "https://api.intra.42.fr/oauth/authorize",
-            tokenUrl: "https://api.intra.42.fr/oauth/token",
-            userInfoUrl: "https://api.intra.42.fr/v2/me",
+            authorizationUrl: `${INTRA42_API}/oauth/authorize`,
+            tokenUrl: `${INTRA42_API}/oauth/token`,
+            userInfoUrl: `${INTRA42_API}/v2/me`,
             scopes: ["public"],
             mapProfileToUser: (profile) => ({
-              name: String(profile["displayname"]),
+              name: String(profile["displayname"] ?? profile["login"]),
               image: (profile["image"] as { link?: string } | undefined)?.link,
-              // 42 gives every student a school email it has checked
+              // 42 verifies emails
               emailVerified: true,
             }),
           },

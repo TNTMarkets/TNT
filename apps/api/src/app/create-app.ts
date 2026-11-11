@@ -21,7 +21,6 @@ export function createApp({
   const app = express();
   app.set("trust proxy", 1);
   app.disable("x-powered-by");
-  // Before express.json(): Better Auth reads the request body itself
   if (auth) app.all("/api/auth/*splat", auth);
   app.use(express.json({ limit: "100kb" }));
 

@@ -6,11 +6,15 @@ import type { Auth } from "./auth/auth.ts";
 import { authRoutes } from "./auth/routes.ts";
 
 export function createAccountsModule({ db, auth }: { db: Db; auth: Auth }) {
-  const getUserId: GetUserId = async (headers) => {
-    const session = await auth.api.getSession({
+  const getUserId: GetUserId = async (headers, res) => {
+    const { headers: out, response } = await auth.api.getSession({
       headers: fromNodeHeaders(headers),
+      returnHeaders: true,
     });
-    return session?.user.id ?? null;
+    // Keep the refreshed session cookie
+    const cookies = out.getSetCookie();
+    if (cookies.length > 0) res.append("set-cookie", cookies);
+    return response?.user.id ?? null;
   };
   const router = Router();
   router.use(authRoutes({ db, getUserId }));

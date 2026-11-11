@@ -1,12 +1,13 @@
+import { eq } from "drizzle-orm";
 import { testUtils, type TestHelpers } from "better-auth/plugins";
 import { expect } from "vitest";
 import { z } from "zod";
 import type { Db } from "#platform/db/db.ts";
 import { dbTest } from "#test/db.ts";
-import { request } from "#test/http.ts";
+import { request, requestWithHeaders } from "#test/http.ts";
 import { createApp } from "#app/create-app.ts";
 import { createAccountsModule, createAuth } from "#modules/accounts/index.ts";
-import { users } from "./schema.ts";
+import { sessions, users } from "./schema.ts";
 
 const config = {
   baseURL: "http://localhost:3000",
@@ -51,6 +52,33 @@ dbTest("GET /api/me answers the signed-in user", async ({ db }) => {
     body: { user: { id: user.id, name: "Ada", image: null } },
   });
 });
+
+dbTest(
+  "a day-old session is extended and the browser gets the new cookie",
+  async ({ db }) => {
+    const { app, test } = await setup(db);
+    const [user] = await db
+      .insert(users)
+      .values({ name: "Ada", email: "ada@student.42.fr" })
+      .returning();
+    if (!user) throw new Error("user not inserted");
+    const headers = Object.fromEntries(
+      await test.getAuthHeaders({ userId: user.id }),
+    );
+    const inOneDay = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    await db
+      .update(sessions)
+      .set({ expiresAt: inOneDay })
+      .where(eq(sessions.userId, user.id));
+
+    const res = await requestWithHeaders(app, { path: "/api/me", headers });
+
+    expect(res.status).toBe(200);
+    expect(res.headers.getSetCookie().join("; ")).toContain(
+      "better-auth.session_token=",
+    );
+  },
+);
 
 dbTest(
   "sign-in with 42 sends the user to 42 with our app and callback",

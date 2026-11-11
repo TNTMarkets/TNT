@@ -1,25 +1,12 @@
-import { sql } from "drizzle-orm";
 import {
   boolean,
   index,
   pgTable,
   text,
-  timestamp,
   unique,
   uuid,
 } from "drizzle-orm/pg-core";
-
-const id = () =>
-  uuid()
-    .primaryKey()
-    .default(sql`uuidv7()`);
-const at = (name: string) => timestamp(name, { withTimezone: true });
-const createdAt = () => at("created_at").defaultNow().notNull();
-const updatedAt = () =>
-  at("updated_at")
-    .defaultNow()
-    .$onUpdate(() => new Date())
-    .notNull();
+import { createdAt, id, timestamptz, updatedAt } from "#platform/db/columns.ts";
 
 export const users = pgTable("users", {
   id: id(),
@@ -40,7 +27,7 @@ export const sessions = pgTable(
   "sessions",
   {
     id: id(),
-    expiresAt: at("expires_at").notNull(),
+    expiresAt: timestamptz("expires_at").notNull(),
     token: text().notNull().unique(),
     ipAddress: text("ip_address"),
     userAgent: text("user_agent"),
@@ -61,8 +48,8 @@ export const accounts = pgTable(
     accessToken: text("access_token"),
     refreshToken: text("refresh_token"),
     idToken: text("id_token"),
-    accessTokenExpiresAt: at("access_token_expires_at"),
-    refreshTokenExpiresAt: at("refresh_token_expires_at"),
+    accessTokenExpiresAt: timestamptz("access_token_expires_at"),
+    refreshTokenExpiresAt: timestamptz("refresh_token_expires_at"),
     scope: text(),
     password: text(),
     createdAt: createdAt(),
@@ -84,7 +71,7 @@ export const verifications = pgTable(
     id: id(),
     identifier: text().notNull(),
     value: text().notNull(),
-    expiresAt: at("expires_at").notNull(),
+    expiresAt: timestamptz("expires_at").notNull(),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },

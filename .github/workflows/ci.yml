@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 env:
-  # Fake values: compose and the api won't start without them;
+  # Fake values: compose and the api won't start without them
   POSTGRES_PASSWORD: ci
   BETTER_AUTH_SECRET: ci-secret-at-least-32-characters-long
   INTRA42_CLIENT_ID: ci

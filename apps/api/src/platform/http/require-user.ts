@@ -4,11 +4,12 @@ import { HttpError } from "./errors.ts";
 
 export type GetUserId = (
   headers: IncomingHttpHeaders,
+  res: Response,
 ) => Promise<string | null>;
 
 export function requireUser(getUserId: GetUserId): RequestHandler {
   return async (req, res, next) => {
-    const userId = await getUserId(req.headers);
+    const userId = await getUserId(req.headers, res);
     if (!userId) throw new HttpError(401, "unauthorized");
     res.locals["userId"] = userId;
     next();
