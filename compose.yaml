@@ -27,6 +27,10 @@ services:
     environment:
       <<: *postgres-credentials
       POSTGRES_HOST: db
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:?set it in .env (scripts/setup.sh creates one)}
+      BETTER_AUTH_URL: https://localhost:${HTTPS_PORT:-8443}
+      INTRA42_CLIENT_ID: ${INTRA42_CLIENT_ID:?set it in .env, see docs/setup.md}
+      INTRA42_CLIENT_SECRET: ${INTRA42_CLIENT_SECRET:?set it in .env, see docs/setup.md}
     depends_on:
       migrate:
         condition: service_completed_successfully

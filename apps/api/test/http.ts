@@ -19,14 +19,13 @@ export async function request(
 ): Promise<{ status: number; body: unknown }> {
   const { port, shutdown } = await serve(app, { port: 0, onClose: () => {} });
   try {
+    const hasBody = body !== undefined || rawBody !== undefined;
     const res = await fetch(`http://localhost:${String(port)}${path}`, {
       method,
-      ...(body === undefined && rawBody === undefined
-        ? {}
-        : {
-            headers: { "content-type": "application/json", ...headers },
-            body: rawBody ?? JSON.stringify(body),
-          }),
+      headers: hasBody
+        ? { "content-type": "application/json", ...headers }
+        : headers,
+      ...(hasBody ? { body: rawBody ?? JSON.stringify(body) } : {}),
     });
     const isJson = res.headers.get("content-type")?.includes("json");
     return {

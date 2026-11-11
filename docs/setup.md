@@ -26,6 +26,23 @@ the team relies on, and creates `.env`. It's safe to run again.
 When it finishes, open a new terminal and run `nvm use` in the repo. Skip `nvm use` if you already
 had Node 26 and the script didn't install nvm.
 
+### Keys for sign-in with 42
+
+Sign-in needs your own 42 app; don't share its secret.
+
+1. Open <https://profile.intra.42.fr/oauth/applications/new>.
+2. Website: `http://localhost:5173`. Redirect URI, one per line:
+
+   ```
+   http://localhost:5173/api/auth/callback/42
+   https://localhost:8443/api/auth/callback/42
+   ```
+
+   Scopes: only "Access the user public data". Leave Public off.
+
+3. From the app's page, put UID and SECRET into `.env` as `INTRA42_CLIENT_ID` and
+   `INTRA42_CLIENT_SECRET`.
+
 ## Run the app
 
 ### With Docker
@@ -90,3 +107,4 @@ Then sign in: `codex mcp login linear-tnt`, or **Authenticate** in the VS Code e
 | `port is already allocated` or `address already in use` | Another program has the port. Stop it, or change `POSTGRES_PORT` or `HTTPS_PORT` in `.env` |
 | `password authentication failed`                        | Reset the local db, see `docs/database.md`                                                 |
 | `No test files found` from `pnpm test:integration`      | Start Docker and run again, see `docs/testing.md`                                          |
+| 42 says the redirect URI is invalid                     | Your 42 app lacks that exact Redirect URI, see "Keys for sign-in with 42"                  |

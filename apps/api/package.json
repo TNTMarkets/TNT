@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@tnt/api-schemas": "workspace:*",
+    "better-auth": "catalog:",
     "drizzle-orm": "catalog:",
     "express": "catalog:",
     "postgres": "catalog:",
