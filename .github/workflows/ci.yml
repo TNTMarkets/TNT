@@ -9,7 +9,11 @@ permissions:
   contents: read
 
 env:
-  POSTGRES_PASSWORD: ci # throwaway CI db
+  # Fake values: compose and the api won't start without them
+  POSTGRES_PASSWORD: ci
+  BETTER_AUTH_SECRET: ci-secret-at-least-32-characters-long
+  INTRA42_CLIENT_ID: ci
+  INTRA42_CLIENT_SECRET: ci
 
 concurrency:
   group: ci-${{ github.ref }}

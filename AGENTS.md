@@ -44,6 +44,7 @@ say why and propose changing the rule.
   `// TODO: TNT-22 — move this UI text to translation keys`.
 - Comments only for what code can't say: a product decision or a deliberate workaround, with the
   reason. Short, no trailing period.
+- Deferred work: `// TODO: TNT-<n> — <what>`, only with an existing issue; no number, no TODO.
 
 ## Secrets
 

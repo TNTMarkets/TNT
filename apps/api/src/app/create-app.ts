@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import express, { type Express } from "express";
+import express, { type Express, type RequestHandler } from "express";
 import { healthResponseSchema } from "@tnt/api-schemas/health";
 import type { Db } from "#platform/db/db.ts";
 import { errorHandler, notFound } from "#platform/http/errors.ts";
@@ -9,14 +9,19 @@ import { assertNoRouteConflicts } from "#platform/http/module.ts";
 export function createApp({
   db,
   modules,
+  auth,
   logError = console.error,
 }: {
   db: Db;
   modules: AppModule[];
+  auth?: RequestHandler;
   logError?: (error: unknown) => void;
 }): Express {
   assertNoRouteConflicts(modules);
   const app = express();
+  app.set("trust proxy", 1);
+  app.disable("x-powered-by");
+  if (auth) app.all("/api/auth/*splat", auth);
   app.use(express.json({ limit: "100kb" }));
 
   app.get("/api/health", async (_req, res) => {

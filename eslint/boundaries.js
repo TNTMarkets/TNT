@@ -2,7 +2,7 @@ import boundaries from "eslint-plugin-boundaries";
 
 // Which modules each module may import, through their index.ts
 export const moduleDeps = {
-  api: { listings: [] },
+  api: { listings: [], accounts: [] },
   web: {},
 };
 

@@ -70,8 +70,10 @@ step ".env"
 if [ -e .env ]; then
   echo ".env exists, left as is"
 else
-  sed "s/^POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=$(openssl rand -hex 16)/" .env.example >.env
-  echo "Created .env from .env.example with a random POSTGRES_PASSWORD"
+  sed -e "s/^POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=$(openssl rand -hex 16)/" \
+    -e "s/^BETTER_AUTH_SECRET=.*/BETTER_AUTH_SECRET=$(openssl rand -hex 32)/" \
+    .env.example >.env
+  echo "Created .env from .env.example with a random POSTGRES_PASSWORD and BETTER_AUTH_SECRET"
 fi
 
 step "dependencies and git hooks"
@@ -80,3 +82,4 @@ pnpm install
 printf '\nDone. Open a new terminal, run `nvm use` in the repo, then start Docker and run:\n'
 printf '  pnpm --filter @tnt/api dev   # api on :3000, starts the db\n'
 printf '  pnpm --filter @tnt/web dev   # web on http://localhost:5173\n'
+printf 'Sign-in with 42 needs your own keys: see "Keys for sign-in with 42" in docs/setup.md\n'

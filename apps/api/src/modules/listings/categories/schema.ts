@@ -1,12 +1,11 @@
-import { check, pgTable, text, uuid } from "drizzle-orm/pg-core";
+import { check, pgTable, text } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
+import { id } from "#platform/db/columns.ts";
 
 export const categories = pgTable(
   "categories",
   {
-    id: uuid()
-      .primaryKey()
-      .default(sql`uuidv7()`),
+    id: id(),
     slug: text().notNull().unique(),
   },
   (table) => [
