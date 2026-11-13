@@ -1,0 +1,15 @@
+{
+  "title": "人気のカテゴリー",
+  "empty": "カテゴリーはまだありません",
+  "loadFailed": "カテゴリーを読み込めませんでした",
+  "names": {
+    "electronics": "家電・電子機器",
+    "home-furniture": "家具・インテリア",
+    "clothing": "ファッション",
+    "sports-outdoor": "スポーツ・アウトドア",
+    "kids": "キッズ・ベビー",
+    "books-hobbies": "本・趣味",
+    "vehicles": "車・バイク",
+    "free-stuff": "無料で譲ります"
+  }
+}
