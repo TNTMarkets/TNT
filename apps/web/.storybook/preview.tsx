@@ -3,10 +3,12 @@ import { I18nextProvider } from "react-i18next";
 import { createAppI18n } from "#app/i18n.ts";
 import "#app/index.css";
 
+const i18n = createAppI18n("en");
+
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <I18nextProvider i18n={createAppI18n("en")}>
+      <I18nextProvider i18n={i18n}>
         <Story />
       </I18nextProvider>
     ),

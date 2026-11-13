@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { languages } from "#shared/i18n/detect-language.ts";
+import { languages } from "#shared/i18n/languages.ts";
 import { createAppI18n, resources } from "./i18n.ts";
 
 const keysOf = (value: object, prefix = ""): string[] =>

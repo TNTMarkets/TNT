@@ -1,5 +1,4 @@
-export const languages = ["en", "uk", "ja"] as const;
-export type Language = (typeof languages)[number];
+import { type Language, languages } from "./languages.ts";
 
 export function detectLanguage(preferred: readonly string[]): Language {
   for (const tag of preferred) {

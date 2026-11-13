@@ -1,11 +1,8 @@
 import { createInstance, type i18n } from "i18next";
 import { listingsLocales } from "#modules/listings/index.ts";
 import { notFoundLocales } from "#pages/not-found/locales.ts";
-import {
-  detectLanguage,
-  type Language,
-  languages,
-} from "#shared/i18n/detect-language.ts";
+import { detectLanguage } from "#shared/i18n/detect-language.ts";
+import { type Language, languages } from "#shared/i18n/languages.ts";
 
 const namespaces = {
   listings: listingsLocales,

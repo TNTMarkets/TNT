@@ -29,8 +29,8 @@ say why and propose changing the rule.
   value, never throw; see each test fail on its assertion, never on loading; then code. Don't rewrite a test to change how it fails or to
   make it pass; if a test is wrong, say so first and wait. Infra that can't be tested: verify by
   hand, and name the issue that adds the test.
-- File names: a React component file is named after the component (`HomePage.tsx`); every other
-  file and folder is kebab-case (`parse-request.ts`).
+- File names: a React component and its story are named after the component (`HomePage.tsx`,
+  `HomePage.stories.tsx`); every other file and folder is kebab-case (`parse-request.ts`).
 - DI by hand, no container: modules get their dependencies (db, clients, config) as arguments or
   props; they never export a live instance or read env. Only the code that starts a process wires
   them up.
@@ -41,10 +41,9 @@ say why and propose changing the rule.
   Logic and transactions live in that function, not in the handler; it fails with
   `HttpError(status, code)`. Query params arrive as strings: `z.coerce.number()`, `z.stringbool()`.
 - Web routes are code in `apps/web/src/app/router.tsx`, not file-based.
-- UI text goes through `useTranslation`, never a string literal in JSX (the brand name `TNT` isn't
-  text). Strings live in `locales/{en,uk,ja}.json` next to the page or feature; each page and
-  module exports them from its `locales.ts`; `app/i18n.ts` registers it by one line, named after
-  its folder.
+- UI text goes through `useTranslation`; lint rejects text in JSX. The brand name isn't translated:
+  keep it in a constant. Strings live in `locales/{en,uk,ja}.json` next to the page or feature;
+  each page and module exports them from its `locales.ts`; `app/i18n.ts` registers it.
 - Comments only for what code can't say: a product decision or a deliberate workaround, with the
   reason. Short, no trailing period.
 - Deferred work: `// TODO: TNT-<n> — <what>`, only with an existing issue; no number, no TODO.

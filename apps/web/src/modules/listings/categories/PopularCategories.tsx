@@ -9,7 +9,7 @@ export function PopularCategories({ categories }: { categories: Category[] }) {
     returnObjects: true,
   });
   const translated = categories.filter((category) => {
-    if (names[category.slug]) return true;
+    if (Object.hasOwn(names, category.slug)) return true;
     // TODO: TNT-40 — implement logger
     // eslint-disable-next-line no-restricted-syntax -- the logger will get it as a dependency
     if (import.meta.env.DEV) {
