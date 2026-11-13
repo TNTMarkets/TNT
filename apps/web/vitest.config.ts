@@ -37,6 +37,8 @@ export default mergeConfig(
               instances: [{ browser: "chromium" }],
               expect: {
                 toMatchScreenshot: {
+                  comparatorName: "pixelmatch",
+                  comparatorOptions: { threshold: 0 },
                   // The browser runs in Linux in the container, whatever the host is
                   resolveScreenshotPath: ({
                     root,

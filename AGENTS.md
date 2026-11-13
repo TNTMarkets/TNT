@@ -25,11 +25,12 @@ say why and propose changing the rule.
 ## Code
 
 - Tests first, for product code in `apps/` and `packages/`: agree on behavior with the user; write
-  the tests plus only the empty stubs they need to load (files, exports, routes); see each fail
-  because the behavior is missing (a failed assertion, a timeout, an error on the missing result),
-  never because something can't load; then code. Don't rewrite a test to change how it fails or to
+  the tests plus only the stubs they need to load (files, exports, routes); stubs return a wrong
+  value, never throw; see each test fail on its assertion, never on loading; then code. Don't rewrite a test to change how it fails or to
   make it pass; if a test is wrong, say so first and wait. Infra that can't be tested: verify by
   hand, and name the issue that adds the test.
+- File names: a React component and its story are named after the component (`HomePage.tsx`,
+  `HomePage.stories.tsx`); every other file and folder is kebab-case (`parse-request.ts`).
 - DI by hand, no container: modules get their dependencies (db, clients, config) as arguments or
   props; they never export a live instance or read env. Only the code that starts a process wires
   them up.
@@ -40,8 +41,9 @@ say why and propose changing the rule.
   Logic and transactions live in that function, not in the handler; it fails with
   `HttpError(status, code)`. Query params arrive as strings: `z.coerce.number()`, `z.stringbool()`.
 - Web routes are code in `apps/web/src/app/router.tsx`, not file-based.
-- UI text is plain English until TNT-22; mark each component that has it with
-  `// TODO: TNT-22 — move this UI text to translation keys`.
+- UI text goes through `useTranslation`; lint rejects text in JSX. The brand name isn't translated:
+  keep it in a constant. Strings live in `locales/{en,uk,ja}.json` next to the page or feature;
+  each page and module exports them from its `locales.ts`; `app/i18n.ts` registers it.
 - Comments only for what code can't say: a product decision or a deliberate workaround, with the
   reason. Short, no trailing period.
 - Deferred work: `// TODO: TNT-<n> — <what>`, only with an existing issue; no number, no TODO.
@@ -54,12 +56,13 @@ say why and propose changing the rule.
 ## Tests
 
 - Read `docs/testing.md` before writing integration, e2e or screenshot tests.
+- One behavior, one test, at the cheapest level; skip a test whose failure another test or a
+  screenshot already catches.
 - `pnpm test:integration` with Docker stopped prints "No test files found" (vitest#11682), not a
   Docker error: start Docker, don't debug the globs.
 - e2e specs import `test` and `expect` from `apps/web/e2e/test.ts`, never `@playwright/test`,
   which skips our console check.
-- Until TNT-22 fixes the e2e locale, don't match on UI text (`getByText`, or `getByRole` with
-  `name`): match by `data-testid`.
+- e2e takes expected text from the locale files, never a string literal.
 - Every component with its own markup gets a story. `tags: ["skip-screenshot"]` only for output
   that stays unstable after fixing dates and seeds, e.g. JS-driven animation.
 - Stories skip tests-first. New story: check the baseline shows the component correctly. Update

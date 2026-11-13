@@ -1,0 +1,17 @@
+{
+  "title": "Popular categories",
+  "empty": "No categories yet",
+  "loadFailed": "Couldn't load categories",
+  "names": {
+    "bikes": "Bikes",
+    "books": "Books",
+    "electronics": "Electronics",
+    "home-furniture": "Home & furniture",
+    "clothing": "Clothing",
+    "sports-outdoor": "Sports & outdoor",
+    "kids": "Kids",
+    "books-hobbies": "Books & hobbies",
+    "vehicles": "Vehicles",
+    "free-stuff": "Free stuff"
+  }
+}
