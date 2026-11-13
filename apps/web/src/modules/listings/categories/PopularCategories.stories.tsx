@@ -31,6 +31,15 @@ export const Mobile: Story = {
   globals: { viewport: { value: "mobile" } },
 };
 
+export const Untranslated: Story = {
+  args: {
+    categories: [
+      { id: "0193a000-0000-7000-8000-000000000000", slug: "electronics" },
+      { id: "0193a000-0000-7000-8000-000000000001", slug: "brand-new" },
+    ],
+  },
+};
+
 export const Empty: Story = {
   args: { categories: [] },
 };
