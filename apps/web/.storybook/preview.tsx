@@ -1,7 +1,16 @@
 import type { Preview } from "@storybook/react-vite";
+import { I18nextProvider } from "react-i18next";
+import { createAppI18n } from "#app/i18n.ts";
 import "#app/index.css";
 
 const preview: Preview = {
+  decorators: [
+    (Story) => (
+      <I18nextProvider i18n={createAppI18n("en")}>
+        <Story />
+      </I18nextProvider>
+    ),
+  ],
   parameters: {
     viewport: {
       options: {
