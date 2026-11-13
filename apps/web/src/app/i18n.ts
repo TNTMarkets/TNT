@@ -32,7 +32,7 @@ export function createAppI18n(language: Language): i18n {
     resources,
     lng: language,
     fallbackLng: "en",
-    // React escapes text itself
+    // Otherwise "&" shows as "&amp;"
     interpolation: { escapeValue: false },
     initAsync: false,
   });

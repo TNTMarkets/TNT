@@ -3,6 +3,8 @@
   "empty": "カテゴリーはまだありません",
   "loadFailed": "カテゴリーを読み込めませんでした",
   "names": {
+    "bikes": "自転車",
+    "books": "本",
     "electronics": "家電・電子機器",
     "home-furniture": "家具・インテリア",
     "clothing": "ファッション",

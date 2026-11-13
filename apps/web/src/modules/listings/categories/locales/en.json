@@ -3,6 +3,8 @@
   "empty": "No categories yet",
   "loadFailed": "Couldn't load categories",
   "names": {
+    "bikes": "Bikes",
+    "books": "Books",
     "electronics": "Electronics",
     "home-furniture": "Home & furniture",
     "clothing": "Clothing",
