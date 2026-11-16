@@ -27,6 +27,11 @@ const restrictedImports = (...paths) => [
   { paths: paths.flat(), patterns: [parentImports] },
 ];
 
+const importMetaEnv = {
+  selector: "MemberExpression[object.type='MetaProperty'][property.name='env']",
+  message: envImports[0].message,
+};
+
 const envReaders = [
   "apps/api/src/main.ts",
   "apps/api/src/migrate.ts",
@@ -58,13 +63,19 @@ export const conventions = [
   {
     files: ["apps/web/src/**/*.{ts,tsx}"],
     ignores: ["apps/web/src/main.tsx"],
+    rules: { "no-restricted-syntax": ["error", importMetaEnv] },
+  },
+  // A later block replaces no-restricted-syntax, so it repeats the env selector
+  {
+    files: ["apps/web/src/**/*.tsx"],
+    ignores: ["apps/web/src/main.tsx", "apps/web/src/**/*.stories.tsx"],
     rules: {
       "no-restricted-syntax": [
         "error",
+        importMetaEnv,
         {
-          selector:
-            "MemberExpression[object.type='MetaProperty'][property.name='env']",
-          message: envImports[0].message,
+          selector: "JSXText[value=/\\S/]",
+          message: "UI text goes through useTranslation",
         },
       ],
     },
