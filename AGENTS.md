@@ -41,6 +41,11 @@ say why and propose changing the rule.
   Logic and transactions live in that function, not in the handler; it fails with
   `HttpError(status, code)`. Query params arrive as strings: `z.coerce.number()`, `z.stringbool()`.
 - Web routes are code in `apps/web/src/app/router.tsx`, not file-based.
+- Web pages follow the route tree. A top-level route is a folder in `pages/`. Its child routes
+  (tabs) are subfolders.
+- A route reads its own search params with `getRouteApi`.
+- Components get shared clients from hooks: `useAuthClient()`, `useQueryClient()`. Route guards
+  (`beforeLoad`) take them from their `context` argument.
 - UI text goes through `useTranslation`; lint rejects text in JSX. The brand name isn't translated:
   keep it in a constant. Strings live in `locales/{en,uk,ja}.json` next to the page or feature;
   each page and module exports them from its `locales.ts`; `app/i18n.ts` registers it.
@@ -65,6 +70,8 @@ say why and propose changing the rule.
 - e2e takes expected text from the locale files, never a string literal.
 - Every component with its own markup gets a story. `tags: ["skip-screenshot"]` only for output
   that stays unstable after fixing dates and seeds, e.g. JS-driven animation.
+- A page or tab story opens the real router at a URL: `parameters: { route: "/path" }`.
+- Test data lives in `apps/web/src/shared/testing/fixtures/`. Reuse it, don't copy it.
 - Stories skip tests-first. New story: check the baseline shows the component correctly. Update
   baselines only for a visual change you meant to make: check the diff is what you meant, and say
   so in the PR.

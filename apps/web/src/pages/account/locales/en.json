@@ -1,0 +1,9 @@
+{
+  "tabs": {
+    "settings": "Settings"
+  },
+  "settings": {
+    "logOut": "Log out",
+    "logOutFailed": "Couldn't log out. Try again."
+  }
+}
