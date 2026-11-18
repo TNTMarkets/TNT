@@ -1,6 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
 import { expect, test } from "vitest";
-import { testUser } from "#shared/testing/users.ts";
+import { testUser } from "#shared/testing/fixtures/users.ts";
 import { currentUserQuery } from "./current-user/queries.ts";
 import { signOut } from "./sign-out.ts";
 

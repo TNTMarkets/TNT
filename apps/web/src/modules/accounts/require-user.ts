@@ -9,10 +9,7 @@ export async function requireUser({
   context: { queryClient: QueryClient };
   location: { href: string };
 }): Promise<void> {
-  const user = await context.queryClient.query({
-    ...currentUserQuery,
-    staleTime: "static",
-  });
+  const user = await context.queryClient.query(currentUserQuery);
   if (!user) {
     redirect({
       to: "/sign-in",

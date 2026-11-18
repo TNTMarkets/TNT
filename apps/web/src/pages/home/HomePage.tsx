@@ -8,7 +8,7 @@ const brand = "TNT";
 
 export function HomePage() {
   const { t } = useTranslation("home");
-  const { data: user } = useQuery(currentUserQuery);
+  const { data: user, isPending } = useQuery(currentUserQuery);
 
   return (
     <main className="flex flex-col gap-8 p-8">
@@ -19,7 +19,7 @@ export function HomePage() {
             {user.name}
           </Link>
         ) : (
-          user === null && (
+          !isPending && (
             <Link to="/sign-in" className="underline">
               {t("logIn")}
             </Link>

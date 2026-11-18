@@ -1,5 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { signOut, useAuthClient } from "#modules/accounts/index.ts";
 
@@ -8,13 +9,20 @@ export function SettingsTab() {
   const authClient = useAuthClient();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const [failed, setFailed] = useState(false);
 
   function logOut() {
-    void signOut({ authClient, queryClient }).then(() => navigate({ to: "/" }));
+    setFailed(false);
+    signOut({ authClient, queryClient })
+      .then(() => navigate({ to: "/" }))
+      .catch(() => {
+        setFailed(true);
+      });
   }
 
   return (
     <section className="flex flex-col gap-4">
+      {failed && <p role="alert">{t("settings.logOutFailed")}</p>}
       <button
         type="button"
         onClick={logOut}

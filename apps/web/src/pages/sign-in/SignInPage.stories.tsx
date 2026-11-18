@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { stubFetch } from "#shared/testing/stories.tsx";
 import en from "./locales/en.json" with { type: "json" };
 import { SignInPage } from "./SignInPage.tsx";
 
 const meta = {
   component: SignInPage,
   parameters: { route: "/sign-in" },
+  beforeEach: () => stubFetch({ "/api/me": { body: { user: null } } }),
   play: async ({ canvas }) => {
     await canvas.findByRole("button", { name: en.with42 });
   },

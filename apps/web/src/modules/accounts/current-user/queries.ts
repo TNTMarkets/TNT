@@ -5,4 +5,6 @@ import { getJson } from "#shared/api/request.ts";
 export const currentUserQuery = queryOptions({
   queryKey: ["accounts", "me"],
   queryFn: async () => (await getJson("/api/me", meResponseSchema)).user,
+  // A log out in another tab shows up here within a minute
+  staleTime: 60_000,
 });

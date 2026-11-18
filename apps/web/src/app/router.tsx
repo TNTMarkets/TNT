@@ -8,7 +8,11 @@ import {
   type RouterHistory,
 } from "@tanstack/react-router";
 import { z } from "zod";
-import { requireUser, type WebAuthClient } from "#modules/accounts/index.ts";
+import {
+  requireGuest,
+  requireUser,
+  type WebAuthClient,
+} from "#modules/accounts/index.ts";
 import { AccountPage } from "#pages/account/AccountPage.tsx";
 import { SettingsTab } from "#pages/account/settings/SettingsTab.tsx";
 import { HomePage } from "#pages/home/HomePage.tsx";
@@ -38,6 +42,7 @@ const signInRoute = createRoute({
     redirect: z.string().optional(),
     error: z.string().optional(),
   }),
+  beforeLoad: requireGuest,
   component: SignInPage,
 });
 

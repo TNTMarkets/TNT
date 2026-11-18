@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { stubFetch } from "#shared/testing/stories.tsx";
-import { testCategories } from "#shared/testing/categories.ts";
-import { testUser } from "#shared/testing/users.ts";
+import { testCategories } from "#shared/testing/fixtures/categories.ts";
+import { testUser } from "#shared/testing/fixtures/users.ts";
 import en from "./locales/en.json" with { type: "json" };
 import { HomePage } from "./HomePage.tsx";
 

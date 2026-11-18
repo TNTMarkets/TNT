@@ -31,7 +31,7 @@ function AppAtRoute({ route }: { route: string }) {
 
 const withRoute: Decorator = (Story, { parameters }) => {
   const route = parameters["route"] as string | undefined;
-  return route ? <AppAtRoute route={route} /> : <Story />;
+  return route ? <AppAtRoute key={route} route={route} /> : <Story />;
 };
 
 const preview: Preview = {

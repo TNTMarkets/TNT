@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { testCategories } from "#shared/testing/categories.ts";
+import { testCategories } from "#shared/testing/fixtures/categories.ts";
 import { stubFetch, withQueryClient } from "#shared/testing/stories.tsx";
 import { PopularCategoriesSection } from "./PopularCategoriesSection.tsx";
 

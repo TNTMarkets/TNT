@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { stubFetch } from "#shared/testing/stories.tsx";
-import { testAvatar, testUser } from "#shared/testing/users.ts";
+import { testAvatar, testUser } from "#shared/testing/fixtures/users.ts";
 import { AccountPage } from "./AccountPage.tsx";
 
 const meta = {

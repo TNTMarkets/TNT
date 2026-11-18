@@ -3,6 +3,7 @@
     "settings": "Settings"
   },
   "settings": {
-    "logOut": "Log out"
+    "logOut": "Log out",
+    "logOutFailed": "Couldn't log out. Try again."
   }
 }

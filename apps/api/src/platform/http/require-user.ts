@@ -7,6 +7,7 @@ export type GetUserId = (
   res: Response,
 ) => Promise<string | null>;
 
+// TODO: TNT-31 — use for protected listing routes
 export function requireUser(getUserId: GetUserId): RequestHandler {
   return async (req, res, next) => {
     const userId = await getUserId(req.headers, res);
