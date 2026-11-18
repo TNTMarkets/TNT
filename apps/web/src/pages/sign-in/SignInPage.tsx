@@ -1,4 +1,5 @@
-import { getRouteApi } from "@tanstack/react-router";
+import { getRouteApi, useRouter } from "@tanstack/react-router";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { redirectAfterSignIn, useAuthClient } from "#modules/accounts/index.ts";
 
@@ -8,17 +9,27 @@ export function SignInPage() {
   const { t } = useTranslation("signIn");
   const { redirect, error } = route.useSearch();
   const authClient = useAuthClient();
+  const router = useRouter();
   const navigate = route.useNavigate();
+  const [pending, setPending] = useState(false);
 
   function logInWith42() {
+    if (pending) return;
+    setPending(true);
     const callbackURL = redirectAfterSignIn(redirect);
     authClient.signIn
       .social({
         provider: "42",
         callbackURL,
-        errorCallbackURL: `/sign-in?redirect=${encodeURIComponent(callbackURL)}`,
+        errorCallbackURL: router.buildLocation({
+          to: "/sign-in",
+          search: { redirect: callbackURL },
+        }).href,
       })
-      .catch(() => navigate({ search: { redirect, error: "sign_in_failed" } }));
+      .catch(() => {
+        setPending(false);
+        void navigate({ search: { redirect, error: "sign_in_failed" } });
+      });
   }
 
   return (
@@ -28,6 +39,7 @@ export function SignInPage() {
       <button
         type="button"
         onClick={logInWith42}
+        aria-disabled={pending}
         className="self-start border px-3 py-1">
         {t("with42")}
       </button>

@@ -9,13 +9,17 @@ export function SettingsTab() {
   const authClient = useAuthClient();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const [pending, setPending] = useState(false);
   const [failed, setFailed] = useState(false);
 
   function logOut() {
+    if (pending) return;
+    setPending(true);
     setFailed(false);
     signOut({ authClient, queryClient })
       .then(() => navigate({ to: "/" }))
       .catch(() => {
+        setPending(false);
         setFailed(true);
       });
   }
@@ -26,6 +30,7 @@ export function SettingsTab() {
       <button
         type="button"
         onClick={logOut}
+        aria-disabled={pending}
         className="self-start border px-3 py-1">
         {t("settings.logOut")}
       </button>

@@ -9,7 +9,7 @@ import {
 } from "@tanstack/react-router";
 import { z } from "zod";
 import {
-  requireGuest,
+  requireNoUser,
   requireUser,
   type WebAuthClient,
 } from "#modules/accounts/index.ts";
@@ -24,6 +24,7 @@ interface RouterContext {
   authClient: WebAuthClient;
 }
 
+// TODO: TNT-45 — app error page
 const rootRoute = createRootRouteWithContext<RouterContext>()({
   component: Outlet,
   notFoundComponent: NotFoundPage,
@@ -42,7 +43,7 @@ const signInRoute = createRoute({
     redirect: z.string().optional(),
     error: z.string().optional(),
   }),
-  beforeLoad: requireGuest,
+  beforeLoad: requireNoUser,
   component: SignInPage,
 });
 

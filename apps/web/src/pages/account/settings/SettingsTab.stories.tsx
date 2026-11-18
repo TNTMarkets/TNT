@@ -19,6 +19,14 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const LogOutFailed: Story = {
+  beforeEach: () =>
+    stubFetch({
+      "/api/me": { body: { user: testUser } },
+      "/api/auth/sign-out": {
+        status: 500,
+        body: { error: { code: "internal" } },
+      },
+    }),
   play: async ({ canvas, userEvent }) => {
     await userEvent.click(
       await canvas.findByRole("button", { name: en.settings.logOut }),

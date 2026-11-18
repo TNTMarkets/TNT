@@ -9,7 +9,7 @@ test("a closed page sends a guest to sign-in", async ({ page }) => {
   await expect(page).toHaveURL("/sign-in?redirect=%2Faccount%2Fsettings");
 });
 
-test("log in with 42 goes to 42 and comes back to the page", async ({
+test("log in with 42 goes to 42 and asks to come back to the page", async ({
   page,
 }) => {
   await page.route(`${intra42}/**`, (route) => route.fulfill({ body: "" }));

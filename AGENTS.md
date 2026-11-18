@@ -43,8 +43,9 @@ say why and propose changing the rule.
 - Web routes are code in `apps/web/src/app/router.tsx`, not file-based.
 - Web pages follow the route tree. A top-level route is a folder in `pages/`. Its child routes
   (tabs) are subfolders.
-- A route reads its own search params with `getRouteApi`. Shared clients come from hooks:
-  `useAuthClient()`, `useQueryClient()`. Never from a route's context.
+- A route reads its own search params with `getRouteApi`.
+- Components get shared clients from hooks: `useAuthClient()`, `useQueryClient()`. Route guards
+  (`beforeLoad`) take them from their `context` argument.
 - UI text goes through `useTranslation`; lint rejects text in JSX. The brand name isn't translated:
   keep it in a constant. Strings live in `locales/{en,uk,ja}.json` next to the page or feature;
   each page and module exports them from its `locales.ts`; `app/i18n.ts` registers it.

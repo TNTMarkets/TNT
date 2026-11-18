@@ -15,3 +15,15 @@ test("after log out nobody is signed in", async () => {
 
   expect(queryClient.getQueryData(currentUserQuery.queryKey)).toBeNull();
 });
+
+test("log out drops the previous user's data", async () => {
+  const queryClient = new QueryClient();
+  queryClient.setQueryData(["listings", "mine"], [{ id: "1" }]);
+
+  await signOut({
+    authClient: { signOut: () => Promise.resolve() },
+    queryClient,
+  });
+
+  expect(queryClient.getQueryData(["listings", "mine"])).toBeUndefined();
+});
