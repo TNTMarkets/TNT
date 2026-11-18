@@ -24,5 +24,6 @@ test("log in with 42 goes to 42 and asks to come back to the page", async ({
   expect((await signInRequest).postDataJSON()).toMatchObject({
     provider: "42",
     callbackURL: "/account/settings",
+    errorCallbackURL: "/sign-in?redirect=%2Faccount%2Fsettings",
   });
 });

@@ -17,9 +17,11 @@ export function stubFetch(routes: Record<string, StubResponse>): () => void {
   const realFetch = globalThis.fetch;
   globalThis.fetch = (input) => {
     const url = input instanceof Request ? input.url : String(input);
-    const { status = 200, body } = routes[
-      new URL(url, location.origin).pathname
-    ] ?? { status: 404, body: { error: { code: "not_found" } } };
+    const path = new URL(url, location.origin).pathname;
+    const { status = 200, body } = routes[path] ?? {
+      status: 404,
+      body: { error: { code: "not_found" } },
+    };
     return Promise.resolve(
       new Response(JSON.stringify(body), {
         status,

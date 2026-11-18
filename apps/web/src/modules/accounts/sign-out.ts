@@ -9,6 +9,7 @@ export async function signOut({
   queryClient: QueryClient;
 }): Promise<void> {
   await authClient.signOut();
+  // No user data may outlive log out
   queryClient.clear();
   queryClient.setQueryData(currentUserQuery.queryKey, null);
 }

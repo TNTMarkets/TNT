@@ -16,12 +16,13 @@ export function SettingsTab() {
     if (pending) return;
     setPending(true);
     setFailed(false);
-    signOut({ authClient, queryClient })
-      .then(() => navigate({ to: "/" }))
-      .catch(() => {
+    signOut({ authClient, queryClient }).then(
+      () => navigate({ to: "/" }),
+      () => {
         setPending(false);
         setFailed(true);
-      });
+      },
+    );
   }
 
   return (

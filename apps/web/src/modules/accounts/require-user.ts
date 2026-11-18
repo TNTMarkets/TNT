@@ -9,6 +9,7 @@ export async function requireUser({
   context: { queryClient: QueryClient };
   location: { href: string };
 }): Promise<void> {
+  // A failed /api/me shows the app error page: TNT-45
   const user = await context.queryClient.query(currentUserQuery);
   if (!user) {
     redirect({

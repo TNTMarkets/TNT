@@ -1,5 +1,5 @@
 import { getRouteApi, useRouter } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { redirectAfterSignIn, useAuthClient } from "#modules/accounts/index.ts";
 
@@ -11,6 +11,7 @@ export function SignInPage() {
   const authClient = useAuthClient();
   const router = useRouter();
   const navigate = route.useNavigate();
+  // Not useMutation: it frees the button while leaving for 42
   const [pending, setPending] = useState(false);
 
   function logInWith42() {
@@ -31,6 +32,16 @@ export function SignInPage() {
         void navigate({ search: { redirect, error: "sign_in_failed" } });
       });
   }
+
+  useEffect(() => {
+    function onPageShow(event: PageTransitionEvent) {
+      if (event.persisted) setPending(false);
+    }
+    window.addEventListener("pageshow", onPageShow);
+    return () => {
+      window.removeEventListener("pageshow", onPageShow);
+    };
+  }, []);
 
   return (
     <main className="flex flex-col gap-4 p-8">
