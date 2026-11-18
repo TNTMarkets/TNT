@@ -27,12 +27,12 @@ async function setup(db: Db) {
   return { app, test };
 }
 
-dbTest("GET /api/me answers 401 without a session", async ({ db }) => {
+dbTest("GET /api/me answers no user without a session", async ({ db }) => {
   const { app } = await setup(db);
 
   expect(await request(app, { path: "/api/me" })).toEqual({
-    status: 401,
-    body: { error: { code: "unauthorized" } },
+    status: 200,
+    body: { user: null },
   });
 });
 

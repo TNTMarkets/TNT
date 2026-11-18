@@ -1,12 +1,16 @@
 import { createInstance, type i18n } from "i18next";
 import { listingsLocales } from "#modules/listings/index.ts";
+import { accountSettingsLocales } from "#pages/account-settings/locales.ts";
 import { notFoundLocales } from "#pages/not-found/locales.ts";
+import { signInLocales } from "#pages/sign-in/locales.ts";
 import { detectLanguage } from "#shared/i18n/detect-language.ts";
 import { type Language, languages } from "#shared/i18n/languages.ts";
 
 const namespaces = {
   listings: listingsLocales,
   notFound: notFoundLocales,
+  signIn: signInLocales,
+  accountSettings: accountSettingsLocales,
 };
 
 type Namespaces = typeof namespaces;
