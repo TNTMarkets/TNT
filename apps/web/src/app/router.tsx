@@ -4,14 +4,22 @@ import {
   createRoute,
   createRouter,
   Outlet,
+  redirect,
 } from "@tanstack/react-router";
 import { z } from "zod";
+import { requireUser, type WebAuthClient } from "#modules/accounts/index.ts";
+import { AccountPage } from "#pages/account/AccountPage.tsx";
 import { AccountSettingsPage } from "#pages/account-settings/AccountSettingsPage.tsx";
 import { HomePage } from "#pages/home/HomePage.tsx";
 import { NotFoundPage } from "#pages/not-found/NotFoundPage.tsx";
 import { SignInPage } from "#pages/sign-in/SignInPage.tsx";
 
-const rootRoute = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+interface RouterContext {
+  queryClient: QueryClient;
+  authClient: WebAuthClient;
+}
+
+const rootRoute = createRootRouteWithContext<RouterContext>()({
   component: Outlet,
   notFoundComponent: NotFoundPage,
 });
@@ -25,14 +33,24 @@ const homeRoute = createRoute({
 const signInRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/sign-in",
-  validateSearch: z.object({ redirect: z.string().optional() }),
+  validateSearch: z.object({
+    redirect: z.string().optional(),
+    error: z.string().optional(),
+  }),
   component: SignInPage,
 });
 
 const accountRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/account",
-  component: Outlet,
+  beforeLoad: requireUser,
+  component: AccountPage,
+});
+
+const accountIndexRoute = createRoute({
+  getParentRoute: () => accountRoute,
+  path: "/",
+  beforeLoad: () => redirect({ to: "/account/settings", throw: true }),
 });
 
 const accountSettingsRoute = createRoute({
@@ -41,14 +59,14 @@ const accountSettingsRoute = createRoute({
   component: AccountSettingsPage,
 });
 
-export function createAppRouter({ queryClient }: { queryClient: QueryClient }) {
+export function createAppRouter(context: RouterContext) {
   return createRouter({
     routeTree: rootRoute.addChildren([
       homeRoute,
       signInRoute,
-      accountRoute.addChildren([accountSettingsRoute]),
+      accountRoute.addChildren([accountIndexRoute, accountSettingsRoute]),
     ]),
-    context: { queryClient },
+    context,
   });
 }
 

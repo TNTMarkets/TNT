@@ -1,6 +1,13 @@
 import type { QueryClient } from "@tanstack/react-query";
+import { currentUserQuery } from "./current-user/queries.ts";
 
-export async function signOut(_deps: {
+export async function signOut({
+  authClient,
+  queryClient,
+}: {
   authClient: { signOut: () => Promise<unknown> };
   queryClient: QueryClient;
-}): Promise<void> {}
+}): Promise<void> {
+  await authClient.signOut();
+  queryClient.setQueryData(currentUserQuery.queryKey, null);
+}

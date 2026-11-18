@@ -5,12 +5,14 @@ import { App } from "#app/App.tsx";
 import { createBrowserI18n } from "#app/i18n.ts";
 import { createAppRouter } from "#app/router.tsx";
 import "#app/index.css";
+import { createWebAuthClient } from "#modules/accounts/index.ts";
 
 const root = document.getElementById("root");
 if (!root) throw new Error("#root element is missing in index.html");
 
 const queryClient = new QueryClient();
-const router = createAppRouter({ queryClient });
+const authClient = createWebAuthClient();
+const router = createAppRouter({ queryClient, authClient });
 const i18n = createBrowserI18n();
 
 createRoot(root).render(
