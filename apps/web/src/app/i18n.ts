@@ -1,7 +1,6 @@
 import { createInstance, type i18n } from "i18next";
 import { listingsLocales } from "#modules/listings/index.ts";
 import { accountLocales } from "#pages/account/locales.ts";
-import { accountSettingsLocales } from "#pages/account-settings/locales.ts";
 import { homeLocales } from "#pages/home/locales.ts";
 import { notFoundLocales } from "#pages/not-found/locales.ts";
 import { signInLocales } from "#pages/sign-in/locales.ts";
@@ -14,7 +13,6 @@ const namespaces = {
   notFound: notFoundLocales,
   signIn: signInLocales,
   account: accountLocales,
-  accountSettings: accountSettingsLocales,
 };
 
 type Namespaces = typeof namespaces;

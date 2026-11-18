@@ -5,11 +5,12 @@ import {
   createRouter,
   Outlet,
   redirect,
+  type RouterHistory,
 } from "@tanstack/react-router";
 import { z } from "zod";
 import { requireUser, type WebAuthClient } from "#modules/accounts/index.ts";
 import { AccountPage } from "#pages/account/AccountPage.tsx";
-import { AccountSettingsPage } from "#pages/account-settings/AccountSettingsPage.tsx";
+import { SettingsTab } from "#pages/account/settings/SettingsTab.tsx";
 import { HomePage } from "#pages/home/HomePage.tsx";
 import { NotFoundPage } from "#pages/not-found/NotFoundPage.tsx";
 import { SignInPage } from "#pages/sign-in/SignInPage.tsx";
@@ -56,11 +57,15 @@ const accountIndexRoute = createRoute({
 const accountSettingsRoute = createRoute({
   getParentRoute: () => accountRoute,
   path: "settings",
-  component: AccountSettingsPage,
+  component: SettingsTab,
 });
 
-export function createAppRouter(context: RouterContext) {
+export function createAppRouter(
+  context: RouterContext,
+  history?: RouterHistory,
+) {
   return createRouter({
+    ...(history && { history }),
     routeTree: rootRoute.addChildren([
       homeRoute,
       signInRoute,

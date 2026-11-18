@@ -24,7 +24,10 @@ export function SignInPage() {
     <main className="flex flex-col gap-4 p-8">
       <h1 className="text-2xl font-semibold">{t("title")}</h1>
       {error && <p role="alert">{t("failed")}</p>}
-      <button type="button" onClick={logInWith42}>
+      <button
+        type="button"
+        onClick={logInWith42}
+        className="self-start border px-3 py-1">
         {t("with42")}
       </button>
     </main>

@@ -8,15 +8,25 @@ export const withQueryClient: Decorator = (Story) => (
   </QueryClientProvider>
 );
 
-export function stubFetch(status: number, body: unknown): () => void {
+interface StubResponse {
+  status?: number;
+  body: unknown;
+}
+
+export function stubFetch(routes: Record<string, StubResponse>): () => void {
   const realFetch = globalThis.fetch;
-  globalThis.fetch = () =>
-    Promise.resolve(
+  globalThis.fetch = (input) => {
+    const url = input instanceof Request ? input.url : String(input);
+    const { status = 200, body } = routes[
+      new URL(url, location.origin).pathname
+    ] ?? { status: 404, body: { error: { code: "not_found" } } };
+    return Promise.resolve(
       new Response(JSON.stringify(body), {
         status,
         headers: { "content-type": "application/json" },
       }),
     );
+  };
   return () => {
     globalThis.fetch = realFetch;
   };

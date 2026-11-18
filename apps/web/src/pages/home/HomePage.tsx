@@ -12,12 +12,20 @@ export function HomePage() {
 
   return (
     <main className="flex flex-col gap-8 p-8">
-      <h1 className="text-2xl font-semibold">{brand}</h1>
-      {user ? (
-        <Link to="/account">{user.name}</Link>
-      ) : (
-        user === null && <Link to="/sign-in">{t("logIn")}</Link>
-      )}
+      <header className="flex items-center justify-between gap-4">
+        <h1 className="text-2xl font-semibold">{brand}</h1>
+        {user ? (
+          <Link to="/account" className="underline">
+            {user.name}
+          </Link>
+        ) : (
+          user === null && (
+            <Link to="/sign-in" className="underline">
+              {t("logIn")}
+            </Link>
+          )
+        )}
+      </header>
       <PopularCategoriesSection />
     </main>
   );

@@ -1,12 +1,42 @@
-import type { Preview } from "@storybook/react-vite";
+import type { Decorator, Preview } from "@storybook/react-vite";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { createMemoryHistory, RouterProvider } from "@tanstack/react-router";
+import { useState } from "react";
 import { I18nextProvider } from "react-i18next";
 import { createAppI18n } from "#app/i18n.ts";
+import { createAppRouter } from "#app/router.tsx";
+import { createWebAuthClient } from "#modules/accounts/index.ts";
 import "#app/index.css";
 
 const i18n = createAppI18n("en");
 
+function AppAtRoute({ route }: { route: string }) {
+  const [{ queryClient, router }] = useState(() => {
+    const queryClient = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    const router = createAppRouter(
+      { queryClient, authClient: createWebAuthClient() },
+      createMemoryHistory({ initialEntries: [route] }),
+    );
+    return { queryClient, router };
+  });
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
+}
+
+const withRoute: Decorator = (Story, { parameters }) => {
+  const route = parameters["route"] as string | undefined;
+  return route ? <AppAtRoute route={route} /> : <Story />;
+};
+
 const preview: Preview = {
   decorators: [
+    withRoute,
     (Story) => (
       <I18nextProvider i18n={i18n}>
         <Story />

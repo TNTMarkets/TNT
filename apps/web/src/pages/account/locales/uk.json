@@ -1,5 +1,8 @@
 {
   "tabs": {
     "settings": "Налаштування"
+  },
+  "settings": {
+    "logOut": "Вийти"
   }
 }

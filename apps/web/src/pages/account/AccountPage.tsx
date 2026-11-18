@@ -22,7 +22,9 @@ export function AccountPage() {
         </header>
       )}
       <nav>
-        <Link to="/account/settings">{t("tabs.settings")}</Link>
+        <Link to="/account/settings" className="underline">
+          {t("tabs.settings")}
+        </Link>
       </nav>
       <Outlet />
     </main>

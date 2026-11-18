@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { testCategories } from "#shared/testing/categories.ts";
 import { stubFetch, withQueryClient } from "#shared/testing/stories.tsx";
 import { PopularCategoriesSection } from "./PopularCategoriesSection.tsx";
 
@@ -12,11 +13,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Loaded: Story = {
   beforeEach: () =>
-    stubFetch(200, {
-      categories: [
-        { id: "0193a000-0000-7000-8000-000000000001", slug: "bikes" },
-        { id: "0193a000-0000-7000-8000-000000000002", slug: "books" },
-      ],
+    stubFetch({
+      "/api/categories": {
+        body: {
+          categories: testCategories,
+        },
+      },
     }),
   play: async ({ canvas }) => {
     await canvas.findByTestId("popular-categories");
@@ -24,7 +26,10 @@ export const Loaded: Story = {
 };
 
 export const Failed: Story = {
-  beforeEach: () => stubFetch(500, { error: { code: "internal" } }),
+  beforeEach: () =>
+    stubFetch({
+      "/api/categories": { status: 500, body: { error: { code: "internal" } } },
+    }),
   play: async ({ canvas }) => {
     await canvas.findByRole("alert");
   },
