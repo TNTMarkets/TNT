@@ -417,6 +417,9 @@ importers:
       '@tnt/api-schemas':
         specifier: workspace:*
         version: link:../../packages/api-schemas
+      better-auth:
+        specifier: 'catalog:'
+        version: 1.7.19(drizzle-kit@0.31.11)(drizzle-orm@0.45.4(kysely@0.29.8)(postgres@4.0.0))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(vitest@5.0.5)
       i18next:
         specifier: 'catalog:'
         version: 27.1.1(typescript@6.0.3)
