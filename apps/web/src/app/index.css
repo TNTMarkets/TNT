@@ -4,6 +4,11 @@
 @theme static {
   --font-sans: "Plus Jakarta Sans Variable", sans-serif;
 
+  --text-heading-h2: 1.5rem;
+  --text-heading-h2--line-height: 1.875rem;
+  --text-heading-h2--letter-spacing: -0.01em;
+  --text-heading-h2--font-weight: 700;
+
   --color-bg-canvas: #f5f5f2;
   --color-bg-surface: #ffffff;
   --color-bg-muted: #efefeb;
