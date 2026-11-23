@@ -1,6 +1,16 @@
 @import "tailwindcss";
 @import "@fontsource-variable/plus-jakarta-sans";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light;
+}
+
+:root.dark {
+  color-scheme: dark;
+}
+
 @theme static {
   --font-sans:
     "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif,
@@ -66,33 +76,33 @@
   --text-price--letter-spacing: -0.005em;
   --text-price--font-weight: 700;
 
-  --color-bg-canvas: #f5f5f2;
-  --color-bg-surface: #ffffff;
-  --color-bg-muted: #efefeb;
-  --color-bg-inverse: #141414;
+  --color-bg-canvas: light-dark(#f5f5f2, #f5f5f2);
+  --color-bg-surface: light-dark(#ffffff, #ffffff);
+  --color-bg-muted: light-dark(#efefeb, #efefeb);
+  --color-bg-inverse: light-dark(#141414, #141414);
 
-  --color-text-primary: #141414;
-  --color-text-secondary: #6b6e73;
-  --color-text-tertiary: #a0a3a8;
-  --color-text-inverse: #ffffff;
+  --color-text-primary: light-dark(#141414, #141414);
+  --color-text-secondary: light-dark(#6b6e73, #6b6e73);
+  --color-text-tertiary: light-dark(#a0a3a8, #a0a3a8);
+  --color-text-inverse: light-dark(#ffffff, #ffffff);
 
-  --color-border-default: #e7e7e3;
-  --color-border-strong: #d5d5d0;
+  --color-border-default: light-dark(#e7e7e3, #e7e7e3);
+  --color-border-strong: light-dark(#d5d5d0, #d5d5d0);
 
-  --color-brand-orange: #ff5b1f;
-  --color-brand-blue: #2f5bff;
-  --color-brand-yellow: #ffd84a;
-  --color-brand-green: #2bb673;
+  --color-brand-orange: light-dark(#ff5b1f, #ff5b1f);
+  --color-brand-blue: light-dark(#2f5bff, #2f5bff);
+  --color-brand-yellow: light-dark(#ffd84a, #ffd84a);
+  --color-brand-green: light-dark(#2bb673, #2bb673);
 
-  --color-status-online: #22c55e;
-  --color-status-danger: #e5484d;
+  --color-status-online: light-dark(#22c55e, #22c55e);
+  --color-status-danger: light-dark(#e5484d, #e5484d);
 
-  --color-tint-blue: #e4eeff;
-  --color-tint-mint: #dcf4e6;
-  --color-tint-peach: #ffe8db;
-  --color-tint-yellow: #fff3c6;
-  --color-tint-lilac: #ece8ff;
-  --color-tint-pink: #ffe5ec;
-  --color-tint-sky: #ddf4fa;
-  --color-tint-sand: #f1ece3;
+  --color-tint-blue: light-dark(#e4eeff, #e4eeff);
+  --color-tint-mint: light-dark(#dcf4e6, #dcf4e6);
+  --color-tint-peach: light-dark(#ffe8db, #ffe8db);
+  --color-tint-yellow: light-dark(#fff3c6, #fff3c6);
+  --color-tint-lilac: light-dark(#ece8ff, #ece8ff);
+  --color-tint-pink: light-dark(#ffe5ec, #ffe5ec);
+  --color-tint-sky: light-dark(#ddf4fa, #ddf4fa);
+  --color-tint-sand: light-dark(#f1ece3, #f1ece3);
 }
