@@ -76,18 +76,18 @@
   --text-price--letter-spacing: -0.005em;
   --text-price--font-weight: 700;
 
-  --color-bg-canvas: light-dark(#f5f5f2, #f5f5f2);
-  --color-bg-surface: light-dark(#ffffff, #ffffff);
-  --color-bg-muted: light-dark(#efefeb, #efefeb);
-  --color-bg-inverse: light-dark(#141414, #141414);
+  --color-canvas: light-dark(#f5f5f2, #f5f5f2);
+  --color-surface: light-dark(#ffffff, #ffffff);
+  --color-muted: light-dark(#efefeb, #efefeb);
+  --color-inverse: light-dark(#141414, #141414);
 
-  --color-text-primary: light-dark(#141414, #141414);
-  --color-text-secondary: light-dark(#6b6e73, #6b6e73);
-  --color-text-tertiary: light-dark(#a0a3a8, #a0a3a8);
-  --color-text-inverse: light-dark(#ffffff, #ffffff);
+  --color-foreground: light-dark(#141414, #141414);
+  --color-foreground-secondary: light-dark(#6b6e73, #6b6e73);
+  --color-foreground-tertiary: light-dark(#a0a3a8, #a0a3a8);
+  --color-inverse-foreground: light-dark(#ffffff, #ffffff);
 
-  --color-border-default: light-dark(#e7e7e3, #e7e7e3);
-  --color-border-strong: light-dark(#d5d5d0, #d5d5d0);
+  --color-outline: light-dark(#e7e7e3, #e7e7e3);
+  --color-outline-strong: light-dark(#d5d5d0, #d5d5d0);
 
   --color-brand-orange: light-dark(#ff5b1f, #ff5b1f);
   --color-brand-blue: light-dark(#2f5bff, #2f5bff);
