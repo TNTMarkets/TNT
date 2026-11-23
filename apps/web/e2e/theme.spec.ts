@@ -65,7 +65,9 @@ test("Plus Jakarta Sans loads locally for every design weight", async ({
     const weights = [400, 500, 600, 700, 800];
     const faces = await Promise.all(
       weights.map((weight) =>
-        document.fonts.load(`${String(weight)} 16px "Plus Jakarta Sans"`),
+        document.fonts.load(
+          `${String(weight)} 16px "Plus Jakarta Sans Variable"`,
+        ),
       ),
     );
     return {
@@ -77,11 +79,12 @@ test("Plus Jakarta Sans loads locally for every design weight", async ({
   });
 
   expect(font.family.split(",")[0]?.replaceAll('"', "").trim()).toBe(
-    "Plus Jakarta Sans",
+    "Plus Jakarta Sans Variable",
   );
   expect(font.loaded).toEqual([true, true, true, true, true]);
   expect(fontRequests.length).toBeGreaterThan(0);
   for (const url of fontRequests) {
     expect(new URL(url).origin).toBe(new URL(page.url()).origin);
+    expect(new URL(url).pathname).toMatch(/\.woff2$/);
   }
 });

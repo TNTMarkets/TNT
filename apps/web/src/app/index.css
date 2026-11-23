@@ -1,15 +1,8 @@
 @import "tailwindcss";
-
-@font-face {
-  font-family: "Plus Jakarta Sans";
-  src: url("../assets/fonts/PlusJakartaSans-Variable.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 400 800;
-  font-display: swap;
-}
+@import "@fontsource-variable/plus-jakarta-sans";
 
 @theme static {
-  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-sans: "Plus Jakarta Sans Variable", sans-serif;
 
   --color-bg-canvas: #f5f5f2;
   --color-bg-surface: #ffffff;
