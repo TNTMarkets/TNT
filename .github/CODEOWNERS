@@ -39,3 +39,5 @@ vitest.config.ts                   @Udobnaja @LavrAnastasia
 
 /apps/api/src/modules/listings/  @avaneeko @Udobnaja
 /apps/web/src/modules/listings/  @avaneeko @Udobnaja
+/apps/api/src/modules/accounts/  @Udobnaja @LavrAnastasia
+/apps/web/src/modules/accounts/  @Udobnaja @LavrAnastasia
