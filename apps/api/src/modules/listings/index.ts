@@ -8,5 +8,3 @@ export function createListingsModule({ db }: { db: Db }): AppModule {
   router.use(categoriesRoutes({ db }));
   return { router };
 }
-
-export * from "./schema.ts";
