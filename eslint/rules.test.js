@@ -1,7 +1,12 @@
 import { ESLint } from "eslint";
 import tseslint from "typescript-eslint";
 import { describe, expect, test } from "vitest";
-import { boundariesConfig, findModuleCycle, moduleDeps } from "./boundaries.js";
+import {
+  boundariesConfig,
+  findModuleCycle,
+  foreignKeyDeps,
+  moduleDeps,
+} from "./boundaries.js";
 
 const PROJECT_RULES = new Set([
   "boundaries/dependencies",
@@ -122,7 +127,43 @@ describe("module to module", () => {
   });
 
   test("our allow-list has no cycles", () => {
-    expect(findModuleCycle(moduleDeps)).toBe(undefined);
+    expect(findModuleCycle(moduleDeps, foreignKeyDeps)).toBe(undefined);
+  });
+
+  test("a module on foreignKeyDeps can import foreign-keys.ts", async () => {
+    expect(
+      await violations(
+        "apps/api/src/modules/listings/x.ts",
+        'export * from "#modules/accounts/foreign-keys.ts";',
+      ),
+    ).toEqual([]);
+  });
+
+  test("foreignKeyDeps doesn't open schema.ts", async () => {
+    expect(
+      await violations(
+        "apps/api/src/modules/listings/x.ts",
+        'export * from "#modules/accounts/schema.ts";',
+      ),
+    ).toContain("boundaries/dependencies");
+  });
+
+  test("foreignKeyDeps doesn't open index.ts", async () => {
+    expect(
+      await violations(
+        "apps/api/src/modules/listings/x.ts",
+        'export * from "#modules/accounts/index.ts";',
+      ),
+    ).toContain("boundaries/dependencies");
+  });
+
+  test("findModuleCycle sees cycles through foreignKeyDeps", () => {
+    expect(
+      findModuleCycle(
+        { api: { a: ["b"] }, web: {} },
+        { api: { b: ["a"] }, web: {} },
+      ),
+    ).toEqual(["a", "b", "a"]);
   });
 
   test("findModuleCycle finds a cycle", () => {

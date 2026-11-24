@@ -6,6 +6,9 @@ export const moduleDeps = {
   web: {},
 };
 
+// Modules whose foreign-keys.ts each may import
+export const foreignKeyDeps = { api: {}, web: {} };
+
 export function findModuleCycle(deps) {
   for (const graph of Object.values(deps)) {
     const visit = (module, path) => {
