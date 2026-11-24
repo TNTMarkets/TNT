@@ -16,19 +16,21 @@ const PROJECT_RULES = new Set([
   "no-restricted-syntax",
 ]);
 
-function linter(moduleDeps) {
+function linter(moduleDeps, fkDeps) {
   return new ESLint({
     cwd: import.meta.dirname + "/..",
     // Type-aware rules need a real file; these tests lint plain strings
     overrideConfig: [
       tseslint.configs.disableTypeChecked,
-      ...(moduleDeps ? boundariesConfig(moduleDeps) : []),
+      ...(moduleDeps || fkDeps ? boundariesConfig(moduleDeps, fkDeps) : []),
     ],
   });
 }
 
-async function violations(filePath, code, moduleDeps) {
-  const [result] = await linter(moduleDeps).lintText(code, { filePath });
+async function violations(filePath, code, moduleDeps, fkDeps) {
+  const [result] = await linter(moduleDeps, fkDeps).lintText(code, {
+    filePath,
+  });
   return result.messages
     .filter((message) => PROJECT_RULES.has(message.ruleId))
     .map((message) => message.ruleId);
@@ -135,8 +137,21 @@ describe("module to module", () => {
       await violations(
         "apps/api/src/modules/listings/x.ts",
         'export * from "#modules/accounts/foreign-keys.ts";',
+        undefined,
+        { api: { listings: ["accounts"] }, web: {} },
       ),
     ).toEqual([]);
+  });
+
+  test("foreign-keys.ts only if it's on foreignKeyDeps", async () => {
+    expect(
+      await violations(
+        "apps/api/src/modules/listings/x.ts",
+        'export * from "#modules/accounts/foreign-keys.ts";',
+        undefined,
+        { api: {}, web: {} },
+      ),
+    ).toContain("boundaries/dependencies");
   });
 
   test("foreignKeyDeps doesn't open schema.ts", async () => {
@@ -144,6 +159,8 @@ describe("module to module", () => {
       await violations(
         "apps/api/src/modules/listings/x.ts",
         'export * from "#modules/accounts/schema.ts";',
+        undefined,
+        { api: { listings: ["accounts"] }, web: {} },
       ),
     ).toContain("boundaries/dependencies");
   });
@@ -153,6 +170,8 @@ describe("module to module", () => {
       await violations(
         "apps/api/src/modules/listings/x.ts",
         'export * from "#modules/accounts/index.ts";',
+        undefined,
+        { api: { listings: ["accounts"] }, web: {} },
       ),
     ).toContain("boundaries/dependencies");
   });
@@ -242,19 +261,31 @@ describe("conventions", () => {
     ).toContain("no-restricted-syntax");
   });
 
-  test("a module's public files don't re-export its tables", async () => {
-    expect(
-      await violations(
-        "apps/api/src/modules/accounts/index.ts",
-        'export * from "./schema.ts";',
-      ),
-    ).toContain("no-restricted-syntax");
+  test("a module's index.ts doesn't touch its tables", async () => {
+    for (const code of [
+      'export * from "./schema.ts";',
+      'import { users } from "./schema.ts";\nexport { users };',
+    ])
+      expect(
+        await violations("apps/api/src/modules/accounts/index.ts", code),
+      ).toContain("no-restricted-syntax");
+  });
+
+  test("a module's foreign-keys.ts exports only functions", async () => {
+    for (const code of [
+      'export { users } from "./schema.ts";',
+      'import { users } from "./schema.ts";\nexport { users };',
+      'import { users } from "./schema.ts";\nexport const t = users;',
+    ])
+      expect(
+        await violations("apps/api/src/modules/accounts/foreign-keys.ts", code),
+      ).toContain("no-restricted-syntax");
     expect(
       await violations(
         "apps/api/src/modules/accounts/foreign-keys.ts",
-        'export { users } from "./auth/schema.ts";',
+        'import { users } from "./schema.ts";\nexport const userIdColumn = () => users.id;',
       ),
-    ).toContain("no-restricted-syntax");
+    ).toEqual([]);
   });
 
   test("a module's index.ts can re-export its other files", async () => {

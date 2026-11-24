@@ -32,6 +32,9 @@ const importMetaEnv = {
   message: envImports[0].message,
 };
 
+const tablesMessage =
+  "Other modules don't get our tables: export functions or foreign-keys.ts columns";
+
 const envReaders = [
   "apps/api/src/main.ts",
   "apps/api/src/migrate.ts",
@@ -61,16 +64,29 @@ export const conventions = [
     },
   },
   {
-    files: ["apps/api/src/modules/*/{index,foreign-keys}.ts"],
+    files: ["apps/api/src/modules/*/index.ts"],
     rules: {
       "no-restricted-syntax": [
         "error",
         {
           selector:
-            ":matches(ExportAllDeclaration, ExportNamedDeclaration)[source.value=/schema\\.ts$/]",
-          message:
-            "Other modules don't get our tables: export functions or foreign-keys.ts columns",
+            ":matches(ImportDeclaration, ExportAllDeclaration, ExportNamedDeclaration)[source.value=/schema\\.ts$/]",
+          message: tablesMessage,
         },
+      ],
+    },
+  },
+  {
+    files: ["apps/api/src/modules/*/foreign-keys.ts"],
+    rules: {
+      "no-restricted-syntax": [
+        "error",
+        ...[
+          "ExportAllDeclaration",
+          "ExportDefaultDeclaration",
+          "ExportNamedDeclaration[declaration=null]",
+          "ExportNamedDeclaration > VariableDeclaration > VariableDeclarator[init.type!=/^(Arrow)?FunctionExpression$/]",
+        ].map((selector) => ({ selector, message: tablesMessage })),
       ],
     },
   },
