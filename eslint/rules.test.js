@@ -261,7 +261,7 @@ describe("conventions", () => {
     ).toContain("no-restricted-syntax");
   });
 
-  test("a module's index.ts doesn't touch its tables", async () => {
+  test("a module's index.ts doesn't touch its schema.ts", async () => {
     for (const code of [
       'export * from "./schema.ts";',
       'import { users } from "./schema.ts";\nexport { users };',

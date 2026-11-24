@@ -32,8 +32,10 @@ const importMetaEnv = {
   message: envImports[0].message,
 };
 
-const tablesMessage =
-  "Other modules don't get our tables: export functions or foreign-keys.ts columns";
+const indexSchemaMessage =
+  "A module's tables are private: share functions, not schema.ts";
+const foreignKeysMessage =
+  "foreign-keys.ts shares column functions only, so tables stay private";
 
 const envReaders = [
   "apps/api/src/main.ts",
@@ -71,7 +73,7 @@ export const conventions = [
         {
           selector:
             ":matches(ImportDeclaration, ExportAllDeclaration, ExportNamedDeclaration)[source.value=/schema\\.ts$/]",
-          message: tablesMessage,
+          message: indexSchemaMessage,
         },
       ],
     },
@@ -86,7 +88,7 @@ export const conventions = [
           "ExportDefaultDeclaration",
           "ExportNamedDeclaration[declaration=null]",
           "ExportNamedDeclaration > VariableDeclaration > VariableDeclarator[init.type!=/^(Arrow)?FunctionExpression$/]",
-        ].map((selector) => ({ selector, message: tablesMessage })),
+        ].map((selector) => ({ selector, message: foreignKeysMessage })),
       ],
     },
   },

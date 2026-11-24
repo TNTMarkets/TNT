@@ -2,7 +2,9 @@
 
 Postgres 18 in Docker, Drizzle ORM. Each module owns its tables. Other modules never read or write
 them: they call the owner's functions. For a foreign key, the owner exports a column from its
-`foreign-keys.ts`.
+`foreign-keys.ts`. Lint catches accidents only; handing out a table on purpose is forbidden too,
+e.g. a `foreign-keys.ts` function that returns a table, or `index.ts` re-exporting a file that
+exports one.
 
 ## Locally
 

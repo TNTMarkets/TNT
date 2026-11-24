@@ -61,8 +61,8 @@ say why and propose changing the rule.
 ## Tests
 
 - Read `docs/testing.md` before writing integration, e2e or screenshot tests.
-- One behavior, one test, at the cheapest level; skip a test whose failure another test or a
-  screenshot already catches.
+- One behavior, one test (several asserts are fine), at the cheapest level; skip a test whose
+  failure another test or a screenshot already catches.
 - `pnpm test:integration` with Docker stopped prints "No test files found" (vitest#11682), not a
   Docker error: start Docker, don't debug the globs.
 - e2e specs import `test` and `expect` from `apps/web/e2e/test.ts`, never `@playwright/test`,
