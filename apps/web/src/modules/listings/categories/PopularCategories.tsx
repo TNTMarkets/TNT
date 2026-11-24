@@ -23,7 +23,7 @@ export function PopularCategories({ categories }: { categories: Category[] }) {
       aria-labelledby={titleId}
       data-testid="popular-categories"
       className="flex flex-col gap-4">
-      <h2 id={titleId} className="text-2xl font-semibold">
+      <h2 id={titleId} className="text-heading-h2 text-foreground">
         {t("categories.title")}
       </h2>
       {translated.length === 0 ? (

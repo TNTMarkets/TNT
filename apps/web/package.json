@@ -20,6 +20,7 @@
     "test:screenshots:update": "vitest run --project screenshots --update"
   },
   "dependencies": {
+    "@fontsource-variable/plus-jakarta-sans": "catalog:",
     "@tanstack/react-query": "catalog:",
     "@tanstack/react-router": "catalog:",
     "@tnt/api-schemas": "workspace:*",

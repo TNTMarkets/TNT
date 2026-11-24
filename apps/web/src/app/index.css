@@ -1,1 +1,108 @@
 @import "tailwindcss";
+@import "@fontsource-variable/plus-jakarta-sans";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light;
+}
+
+:root.dark {
+  color-scheme: dark;
+}
+
+@theme static {
+  --font-sans:
+    "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --text-display: 3.25rem;
+  --text-display--line-height: 3.5rem;
+  --text-display--letter-spacing: -0.025em;
+  --text-display--font-weight: 800;
+
+  --text-heading-h1: 2rem;
+  --text-heading-h1--line-height: 2.375rem;
+  --text-heading-h1--letter-spacing: -0.015em;
+  --text-heading-h1--font-weight: 700;
+
+  --text-heading-h2: 1.5rem;
+  --text-heading-h2--line-height: 1.875rem;
+  --text-heading-h2--letter-spacing: -0.01em;
+  --text-heading-h2--font-weight: 700;
+
+  --text-heading-h3: 1.125rem;
+  --text-heading-h3--line-height: 1.5rem;
+  --text-heading-h3--letter-spacing: -0.005em;
+  --text-heading-h3--font-weight: 600;
+
+  --text-body-medium: 0.9375rem;
+  --text-body-medium--line-height: 1.375rem;
+  --text-body-medium--letter-spacing: 0em;
+  --text-body-medium--font-weight: 500;
+
+  --text-body-large: 1rem;
+  --text-body-large--line-height: 1.5rem;
+  --text-body-large--letter-spacing: 0em;
+  --text-body-large--font-weight: 400;
+
+  --text-body-default: 0.9375rem;
+  --text-body-default--line-height: 1.375rem;
+  --text-body-default--letter-spacing: 0em;
+  --text-body-default--font-weight: 400;
+
+  --text-label-large: 1rem;
+  --text-label-large--line-height: 1.5rem;
+  --text-label-large--letter-spacing: 0em;
+  --text-label-large--font-weight: 600;
+
+  --text-label: 0.875rem;
+  --text-label--line-height: 1.25rem;
+  --text-label--letter-spacing: 0em;
+  --text-label--font-weight: 600;
+
+  --text-small-medium: 0.8125rem;
+  --text-small-medium--line-height: 1.125rem;
+  --text-small-medium--letter-spacing: 0em;
+  --text-small-medium--font-weight: 500;
+
+  --text-small: 0.8125rem;
+  --text-small--line-height: 1.125rem;
+  --text-small--letter-spacing: 0em;
+  --text-small--font-weight: 400;
+
+  --text-price: 1.125rem;
+  --text-price--line-height: 1.5rem;
+  --text-price--letter-spacing: -0.005em;
+  --text-price--font-weight: 700;
+
+  --color-canvas: light-dark(#f5f5f2, #f5f5f2);
+  --color-surface: light-dark(#ffffff, #ffffff);
+  --color-muted: light-dark(#efefeb, #efefeb);
+  --color-inverse: light-dark(#141414, #141414);
+
+  --color-foreground: light-dark(#141414, #141414);
+  --color-foreground-secondary: light-dark(#6b6e73, #6b6e73);
+  --color-foreground-tertiary: light-dark(#a0a3a8, #a0a3a8);
+  --color-inverse-foreground: light-dark(#ffffff, #ffffff);
+
+  --color-outline: light-dark(#e7e7e3, #e7e7e3);
+  --color-outline-strong: light-dark(#d5d5d0, #d5d5d0);
+
+  --color-brand-orange: light-dark(#ff5b1f, #ff5b1f);
+  --color-brand-blue: light-dark(#2f5bff, #2f5bff);
+  --color-brand-yellow: light-dark(#ffd84a, #ffd84a);
+  --color-brand-green: light-dark(#2bb673, #2bb673);
+
+  --color-status-online: light-dark(#22c55e, #22c55e);
+  --color-status-danger: light-dark(#e5484d, #e5484d);
+
+  --color-tint-blue: light-dark(#e4eeff, #e4eeff);
+  --color-tint-mint: light-dark(#dcf4e6, #dcf4e6);
+  --color-tint-peach: light-dark(#ffe8db, #ffe8db);
+  --color-tint-yellow: light-dark(#fff3c6, #fff3c6);
+  --color-tint-lilac: light-dark(#ece8ff, #ece8ff);
+  --color-tint-pink: light-dark(#ffe5ec, #ffe5ec);
+  --color-tint-sky: light-dark(#ddf4fa, #ddf4fa);
+  --color-tint-sand: light-dark(#f1ece3, #f1ece3);
+}
