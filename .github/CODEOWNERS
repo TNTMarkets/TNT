@@ -36,3 +36,6 @@ vitest.config.ts                   @Udobnaja @LavrAnastasia
 /packages/*/tsconfig.json @Udobnaja @LavrAnastasia
 /apps/web/vite.config.ts  @Udobnaja @LavrAnastasia
 /AGENTS.md                @Udobnaja @LavrAnastasia
+
+/apps/api/src/modules/listings/  @avaneeko @Udobnaja
+/apps/web/src/modules/listings/  @avaneeko @Udobnaja
