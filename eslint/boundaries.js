@@ -7,10 +7,18 @@ export const moduleDeps = {
 };
 
 // Modules whose foreign-keys.ts each may import
-export const foreignKeyDeps = { api: {}, web: {} };
+export const foreignKeyDeps = {
+  api: { listings: ["accounts"] },
+  web: {},
+};
 
-export function findModuleCycle(deps) {
-  for (const graph of Object.values(deps)) {
+export function findModuleCycle(...depsList) {
+  const apps = new Set(depsList.flatMap(Object.keys));
+  for (const app of apps) {
+    const graph = {};
+    for (const deps of depsList)
+      for (const [module, targets] of Object.entries(deps[app] ?? {}))
+        graph[module] = [...(graph[module] ?? []), ...targets];
     const visit = (module, path) => {
       if (path.includes(module))
         return [...path.slice(path.indexOf(module)), module];
@@ -30,19 +38,21 @@ export function findModuleCycle(deps) {
 
 const layer = (type) => ({ to: { element: { type } } });
 const workspacePackage = layer("package");
-const moduleIndex = (captured) => ({
-  to: {
-    element: { type: "module", captured, fileInternalPath: "index.{ts,tsx}" },
-  },
+const moduleFile = (captured, fileInternalPath) => ({
+  to: { element: { type: "module", captured, fileInternalPath } },
 });
+const moduleIndex = (captured) => moduleFile(captured, "index.{ts,tsx}");
 
-export function boundariesConfig(deps = moduleDeps) {
-  const crossModule = Object.entries(deps).flatMap(([appName, graph]) =>
-    Object.entries(graph).map(([module, allowed]) => ({
-      from: { element: { type: "module", captured: { appName, module } } },
-      allow: allowed.map((target) => moduleIndex({ appName, module: target })),
-    })),
-  );
+export function boundariesConfig(deps = moduleDeps, fkDeps = foreignKeyDeps) {
+  const crossModule = (graphs, file) =>
+    Object.entries(graphs).flatMap(([appName, graph]) =>
+      Object.entries(graph).map(([module, allowed]) => ({
+        from: { element: { type: "module", captured: { appName, module } } },
+        allow: allowed.map((target) =>
+          moduleFile({ appName, module: target }, file),
+        ),
+      })),
+    );
 
   return [
     {
@@ -150,7 +160,8 @@ export function boundariesConfig(deps = moduleDeps) {
                   workspacePackage,
                 ],
               },
-              ...crossModule,
+              ...crossModule(deps, "index.{ts,tsx}"),
+              ...crossModule(fkDeps, "foreign-keys.ts"),
               {
                 from: { element: { type: "platform" } },
                 allow: [layer("platform"), layer("shared"), workspacePackage],
