@@ -1,7 +1,8 @@
 # Database
 
-Postgres 18 in Docker, Drizzle ORM. Each module owns its tables; other modules read them through the
-module's `index.ts` and never write them.
+Postgres 18 in Docker, Drizzle ORM. Each module owns its tables. Other modules never read or write
+them: they call the owner's functions. For a foreign key, the owner exports a column from its
+`foreign-keys.ts`.
 
 ## Locally
 

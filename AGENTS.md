@@ -98,8 +98,9 @@ Commands inside Docker images aren't in the workspace; this rule doesn't apply t
 - New module or feature: follow the reference `listings/categories` in api and web.
 - A new module (rather than a feature in an existing one) is the user's call. Once agreed, add it
   to `createApp`'s `modules` in `apps/api/src/main.ts`, or its routes answer 404.
-- For module A to import module B, add B to A's list in `moduleDeps` (`eslint/boundaries.js`),
-  under its app, e.g. `api: { chat: ["listings"] }` lets the api's chat import listings. Ask the
-  user first.
+- Module A imports module B: ask the user first. Add B to A's list in `eslint/boundaries.js`.
+  A needs a foreign key to B's table: use `foreignKeyDeps`; B exports the column from its
+  `foreign-keys.ts`. A needs B's code: use `moduleDeps` and B's `index.ts`. A never reads or writes
+  B's tables; it calls B's functions.
 - Realtime (Socket.io, not installed yet) goes in `apps/api/src/platform/realtime`, not in a
   module: chat and notifications send events through it, so they don't import each other.
