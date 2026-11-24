@@ -241,4 +241,28 @@ describe("conventions", () => {
       ),
     ).toContain("no-restricted-syntax");
   });
+
+  test("a module's public files don't re-export its tables", async () => {
+    expect(
+      await violations(
+        "apps/api/src/modules/accounts/index.ts",
+        'export * from "./schema.ts";',
+      ),
+    ).toContain("no-restricted-syntax");
+    expect(
+      await violations(
+        "apps/api/src/modules/accounts/foreign-keys.ts",
+        'export { users } from "./auth/schema.ts";',
+      ),
+    ).toContain("no-restricted-syntax");
+  });
+
+  test("a module's index.ts can re-export its other files", async () => {
+    expect(
+      await violations(
+        "apps/api/src/modules/accounts/index.ts",
+        'export { createAuth } from "./auth/auth.ts";',
+      ),
+    ).toEqual([]);
+  });
 });

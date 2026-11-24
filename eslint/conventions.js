@@ -61,6 +61,20 @@ export const conventions = [
     },
   },
   {
+    files: ["apps/api/src/modules/*/{index,foreign-keys}.ts"],
+    rules: {
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector:
+            ":matches(ExportAllDeclaration, ExportNamedDeclaration)[source.value=/schema\\.ts$/]",
+          message:
+            "Other modules don't get our tables: export functions or foreign-keys.ts columns",
+        },
+      ],
+    },
+  },
+  {
     files: ["apps/web/src/**/*.{ts,tsx}"],
     ignores: ["apps/web/src/main.tsx"],
     rules: { "no-restricted-syntax": ["error", importMetaEnv] },
