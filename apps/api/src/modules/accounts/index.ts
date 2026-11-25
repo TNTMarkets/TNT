@@ -23,4 +23,3 @@ export function createAccountsModule({ db, auth }: { db: Db; auth: Auth }) {
 
 export { createAuth } from "./auth/auth.ts";
 export { authConfigFromEnv, type AuthConfig } from "./auth/config.ts";
-export * from "./schema.ts";
