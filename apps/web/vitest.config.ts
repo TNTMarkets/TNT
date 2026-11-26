@@ -25,6 +25,9 @@ export default mergeConfig(
           ],
           test: {
             name: "screenshots",
+            // One shared browser in Docker: more parallel files time out
+            maxWorkers: 3,
+            testTimeout: 30_000,
             browser: {
               enabled: true,
               headless: true,
