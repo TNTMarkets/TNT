@@ -68,6 +68,9 @@ say why and propose changing the rule.
 - e2e specs import `test` and `expect` from `apps/web/e2e/test.ts`, never `@playwright/test`,
   which skips our console check.
 - e2e takes expected text from the locale files, never a string literal.
+- axe checks every story and the last app page of every e2e test against WCAG 2.2 A/AA; a
+  violation fails CI. Fix the markup. Only if the fix needs its own issue: mark the story
+  `parameters: { a11y: { test: "todo" } }` with `// TODO: TNT-<n> — <what>`. Never disable rules.
 - Every component with its own markup gets a story. `tags: ["skip-screenshot"]` only for output
   that stays unstable after fixing dates and seeds, e.g. JS-driven animation.
 - A page or tab story opens the real router at a URL: `parameters: { route: "/path" }`.

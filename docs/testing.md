@@ -32,12 +32,15 @@
   ```
 
 - A test fails on any error or warning in the browser console.
+- A test also fails if axe finds a WCAG 2.2 A/AA violation on the page it ends on.
 
 ## Screenshots
 
 - Every story is screenshotted in a Linux browser inside Docker, so results match on every machine
   and in CI. The first run builds that browser image (about 1 GB download).
 - Baselines live in `__screenshots__/` next to the stories and are committed.
+- axe checks every story too; a WCAG 2.2 A/AA violation fails it. The Accessibility tab in
+  Storybook shows what's wrong.
 - Changed the UI on purpose? Run `pnpm test:screenshots:update`, look at the new PNGs, commit them.
 - Mobile width: add `globals: { viewport: { value: "mobile" } }` to a story.
 - Modals and toasts render outside the story: add `parameters: { screenshot: { target: "page" } }`.

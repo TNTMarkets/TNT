@@ -7,6 +7,7 @@ import { createAppI18n } from "#app/i18n.ts";
 import { createAppRouter } from "#app/router.tsx";
 import { createWebAuthClient } from "#modules/accounts/index.ts";
 import "#app/index.css";
+import { wcagTags } from "#shared/testing/axe-tags.ts";
 
 const i18n = createAppI18n("en");
 
@@ -44,6 +45,7 @@ const preview: Preview = {
     ),
   ],
   parameters: {
+    a11y: { test: "error", options: { runOnly: wcagTags } },
     viewport: {
       options: {
         desktop: {
